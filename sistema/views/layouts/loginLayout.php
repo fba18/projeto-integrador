@@ -48,7 +48,7 @@ $this->registerCssFile('https://code.ionicframework.com/ionicons/2.0.1/css/ionic
 </body>
 <footer class="footer" >
     <div class="container" style="font-family:calibri;color:#fcfc30 ">
-        <b class="pull-left" >&copy; Site em Definição <?= date('Y') ?></b>
+        <b class="pull-left" >&copy; SGDTE <?= date('Y') ?></b>
     </div>
 </footer>
 

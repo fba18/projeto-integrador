@@ -33,7 +33,7 @@ $this->registerJsFile($publishedRes[1].'/control_sidebar.js', ['depends' => '\ha
                         <ul class="navbar-nav"><br><br></ul>
 
                         <!--img src="/" style="margin-right:2%;" width="35px">
-                        <h4 style="color:yellow;"> Em definição </h4-->
+                        <h4 style="color:yellow;"> SGDTE </h4-->
                         <ul class="navbar-nav ml-auto">
 
                         <!-- Navbar Search -->

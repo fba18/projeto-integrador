@@ -10,9 +10,9 @@ use yii\helpers\Html;
     <!-- Brand Logo -->
     <a href="#" class="brand-link" style='font-family:calibri; color:#ffffff;'>
 
-        <img src="/uploads/imagens/logo.png" alt="EM DESENVOLVIMENTO" style="margin-left:5px;margin-right:12px" width='50px' >
+        <img src="/uploads/imagens/logo.png" alt="Alterar em views/layouts/sidebar.php" style="margin-left:5px;margin-right:12px" width='50px' >
         <b style='font-size:20px;'>
-            EM DESENVOLVIMENTO
+            SGDTE
         </b>
 
     </a>
@@ -26,7 +26,7 @@ use yii\helpers\Html;
                 <img src="<?= $assetDir ?>/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block" style="color:#fcfc30">EM DESEVOLVIMENTO</a>
+                <a href="#" class="d-block" style="color:#fcfc30">SGDTE</a>
             </div>
         </div-->
 
@@ -59,6 +59,15 @@ use yii\helpers\Html;
                                     'items' =>
                                     [
                                         ['label' => 'Trocar Senha', 'icon' => 'bi bi-key', 'url' => ['/user-management/user/change-my-password']],
+                                    ],
+                                ],
+
+                                [
+                                    'label' => 'Clientes',
+                                    'icon' => 'bi bi-globe',
+                                    'items' =>
+                                    [
+                                        ['label' => 'Clientes', 'icon' => 'bi bi-key', 'url' => ['/tb-cliente/index']],
                                     ],
                                 ],
 
@@ -111,6 +120,15 @@ use yii\helpers\Html;
                                 [
                                     ['label' => 'Trocar Senha', 'icon' => 'bi bi-key', 'url' => ['/user-management/user/change-my-password']],
                                     ['label' => 'Funcionário', 'icon' => 'bi bi-people-fill', 'url' => ['/user-management/user/index']],
+                                ],
+                            ],
+
+                            [
+                                'label' => 'Clientes',
+                                'icon' => 'bi bi-globe',
+                                'items' =>
+                                [
+                                    ['label' => 'Clientes', 'icon' => 'bi bi-key', 'url' => ['/tb-cliente/index']],
                                 ],
                             ],
 

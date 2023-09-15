@@ -7,7 +7,7 @@ $this->title = '';
 <div class="site-index">
 
     <div class="jumbotron text-center bg-transparent">
-        <h1 class="display-6"><strong>EM DESENVOLVIMENTO/h1></strong>
+        <h1 class="display-6"><strong>SGDTE</h1></strong>
 
         <p class="lead"></p>
 
