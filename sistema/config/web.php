@@ -28,7 +28,7 @@ $config = [
             'timeFormat' => 'php:H:i:s',
             'decimalSeparator' => ',',
             'thousandSeparator' => '.',
-            'currencyCode' => 'R$',
+            'currencyCode' => 'BRL',
             'locale' => 'pt-BR',
             'defaultTimeZone' => 'America/Sao_Paulo',
         ],

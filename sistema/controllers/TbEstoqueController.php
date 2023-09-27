@@ -146,12 +146,23 @@ class TbEstoqueController extends Controller
     ]);
 
     }
-
+    //Para o javascript de preenchimento automático view estoque
     public  static function actionObterDados($num_produto){
 
 
         $produtoModel = new TbProduto();
         $data = $produtoModel->getProdutos2($num_produto);
+        //var_dump($data);
+       // echo $item['preco_produto'];
+        return json_encode($data);
+    }
+
+    //Para o javascript de preenchimento automático view consumo cliente
+    public  static function actionObterDadosSaldoEstoque($num_produto){
+        //echo $num_produto;die;
+
+        $produtoModel = new TbProduto();
+        $data = $produtoModel->getProdutosSaldoEstoque($num_produto);
         //var_dump($data);
        // echo $item['preco_produto'];
         return json_encode($data);

@@ -9,6 +9,10 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 use Yii;
+use app\models\TbHistoricoConsumo;
+use app\models\TbHistoricoConsumoSearch;
+use yii\data\ActiveDataProvider;
+use yii\db\Query;
 
 /**
  * TbClienteController implements the CRUD actions for TbCliente model.
@@ -49,16 +53,27 @@ class TbClienteController extends Controller
         ]);
     }
 
+    public function actionIndexConsumo()
+    {
+        $searchModel = new TbClienteSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index-consumo', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     /**
      * Displays a single TbCliente model.
-     * @param int $id ID
+     * @param string $cpf_cnpj Cpf Cnpj
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($cpf_cnpj)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($cpf_cnpj),
         ]);
     }
 
@@ -73,7 +88,7 @@ class TbClienteController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['view', 'cpf_cnpj' => $model->cpf_cnpj]);
             }
         } else {
             $model->loadDefaultValues();
@@ -87,16 +102,16 @@ class TbClienteController extends Controller
     /**
      * Updates an existing TbCliente model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
+     * @param string $cpf_cnpj Cpf Cnpj
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($cpf_cnpj)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($cpf_cnpj);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'cpf_cnpj' => $model->cpf_cnpj]);
         }
 
         return $this->render('update', [
@@ -107,13 +122,13 @@ class TbClienteController extends Controller
     /**
      * Deletes an existing TbCliente model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
+     * @param string $cpf_cnpj Cpf Cnpj
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($cpf_cnpj)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($cpf_cnpj)->delete();
 
         return $this->redirect(['index']);
     }
@@ -121,13 +136,13 @@ class TbClienteController extends Controller
     /**
      * Finds the TbCliente model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
+     * @param string $cpf_cnpj Cpf Cnpj
      * @return TbCliente the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($cpf_cnpj)
     {
-        if (($model = TbCliente::findOne(['id' => $id])) !== null) {
+        if (($model = TbCliente::findOne(['cpf_cnpj' => $cpf_cnpj])) !== null) {
             return $model;
         }
 
@@ -152,4 +167,66 @@ class TbClienteController extends Controller
             return ['error' => 'CEP não encontrado'];
         }
     }
+
+    public function actionValidateCpfCnpj()
+    {
+        $model = new TbCliente(); // Substitua YourModel pelo nome do seu modelo
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['valid' => $model->validate(['cpf_cnpj'])];
+        }
+    }
+
+    public function actionConsumoHistorico($cpf_cnpj)
+    {
+        $model = $this->findModel($cpf_cnpj);
+
+        // Crie uma instância de Query para construir a consulta personalizada
+            $query = (new Query())
+            ->select([
+                'hc.id_consumo',
+                'hc.id_cliente_cpf_cnpj',
+                'c.nome',
+                'p.num_produto',
+                'p.nome_produto',
+                'p.estado_produto',
+                'p.preco_produto',
+                'e.id_estoque',
+                'e.qtd_itens',
+                'e.endereco_item',
+                'hc.qtd_consumida',
+                'hc.data_consumo',
+            ])
+            ->from(['hc' => 'tb_historico_consumo'])
+            ->innerJoin(['e' => 'tb_estoque'], 'hc.id_estoque = e.id_estoque')
+            ->innerJoin(['p' => 'tb_produto'], 'e.num_produto = p.num_produto')
+            ->innerJoin(['c' => 'tb_cliente'], 'hc.id_cliente_cpf_cnpj = c.cpf_cnpj')
+            ->where(['hc.id_cliente_cpf_cnpj' => $cpf_cnpj])
+            ->orderBy(['hc.data_consumo' => SORT_ASC]); // Ordenar por data_consumo em ordem crescente
+
+        // Crie um ActiveDataProvider com a consulta personalizada
+        /*$dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);*/
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 5, // Defina o tamanho da página desejado
+            ],
+        ]);
+
+        //var_dump($provider2);
+
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['consumo-historico', 'cpf_cnpj' => $model->cpf_cnpj]);
+        }
+
+        return $this->render('historico', [
+            'model' => $model,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
 }

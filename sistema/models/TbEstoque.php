@@ -62,6 +62,7 @@ class TbEstoque extends \yii\db\ActiveRecord
         ];
     }
 
+    //Para o select2
     public static function getEstoques()
     {
         $estoques = self::find()->all();
@@ -72,6 +73,7 @@ class TbEstoque extends \yii\db\ActiveRecord
         return $data;
     }
 
+    //Para o select2
     public static function getEstoquesEnd()
     {
         $estoques = self::find()->all();

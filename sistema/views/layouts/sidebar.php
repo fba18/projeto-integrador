@@ -80,6 +80,16 @@ use yii\helpers\Html;
                                     ],
                                 ],
 
+                                [
+                                    'label' => 'Consumo',
+                                    'icon' => 'bi bi-boxes',
+                                    'items' =>
+                                    [
+                                        ['label' => 'Inserir Consumo', 'icon' => 'bi bi-box2', 'url' => ['/tb-cliente/index-consumo']],
+                                        ['label' => 'Histórico Consumo', 'icon' => 'bi bi-box2', 'url' => ['/tb-historico-consumo/index']],
+                                    ],
+                                ],
+
                             ],
                         ]
                     );
@@ -141,6 +151,17 @@ use yii\helpers\Html;
                                     ['label' => 'Saldo Estoque', 'icon' => 'bi bi-box2', 'url' => ['/tb-estoque/index']],
                                 ],
                             ],
+
+                            [
+                                'label' => 'Consumo',
+                                'icon' => 'bi bi-boxes',
+                                'items' =>
+                                [
+                                    ['label' => 'Inserir Consumo', 'icon' => 'bi bi-box2', 'url' => ['/tb-cliente/index-consumo']],
+                                    ['label' => 'Histórico Consumo', 'icon' => 'bi bi-box2', 'url' => ['/tb-historico-consumo/index']],
+                                ],
+                            ],
+
 
 
                             //['label' => 'Simple Link', 'icon' => 'th', 'badge' => '<span class="right badge badge-danger">New</span>'],

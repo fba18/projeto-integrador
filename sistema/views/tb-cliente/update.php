@@ -6,10 +6,10 @@ use yii\helpers\Html;
 /** @var app\models\TbCliente $model */
 
 $this->title = Yii::t('app', 'Update Tb Cliente: {name}', [
-    'name' => $model->id,
+    'name' => $model->cpf_cnpj,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Tb Clientes'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->cpf_cnpj, 'url' => ['view', 'cpf_cnpj' => $model->cpf_cnpj]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="tb-cliente-update">

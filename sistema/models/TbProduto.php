@@ -77,81 +77,130 @@ class TbProduto extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function getProdutos()
-    {
-        $produtos = self::find()->all();
-        $data = [];
-        foreach ($produtos as $produto) {
-            $data[$produto->num_produto] = $produto->num_produto;
-            //$data[$produto->nome_produto] = $produto->nome_produto;
-            //$data[$produto->estado_produto] = $produto->estado_produto;
-            //$data[$produto->preco_produto] = $produto->preco_produto;
+    //Para o select2
+        public static function getProdutos()
+        {
+            $produtos = self::find()->all();
+            $data = [];
+            foreach ($produtos as $produto) {
+                $data[$produto->num_produto] = $produto->num_produto;
+                //$data[$produto->nome_produto] = $produto->nome_produto;
+                //$data[$produto->estado_produto] = $produto->estado_produto;
+                //$data[$produto->preco_produto] = $produto->preco_produto;
+            }
+            return $data;
         }
-        return $data;
-    }
 
-    public static function getProdutosNome()
-    {
-        $produtos = self::find()->all();
-        $data = [];
-        foreach ($produtos as $produto) {
-            $data[$produto->nome_produto] = $produto->nome_produto;
+    //Para o select2
+        public static function getProdutosNome()
+        {
+            $produtos = self::find()->all();
+            $data = [];
+            foreach ($produtos as $produto) {
+                $data[$produto->nome_produto] = $produto->nome_produto;
+            }
+            return $data;
         }
-        return $data;
-    }
-    public static function getProdutosEstadoProd()
-    {
-        $produtos = self::find()->all();
-        $data = [];
-        foreach ($produtos as $produto) {
-            $data[$produto->estado_produto] = $produto->estado_produto;
+
+    //Para o select2
+        public static function getProdutosEstadoProd()
+        {
+            $produtos = self::find()->all();
+            $data = [];
+            foreach ($produtos as $produto) {
+                $data[$produto->estado_produto] = $produto->estado_produto;
+            }
+            return $data;
         }
-        return $data;
-    }
 
-    public static function getProdutosPreco()
-    {
-        $produtos = self::find()->all();
-        $data = [];
-        foreach ($produtos as $produto) {
-            $data[$produto->preco_produto] = $produto->preco_produto;
+    //Para o select2
+        public static function getProdutosPreco()
+        {
+            $produtos = self::find()->all();
+            $data = [];
+            foreach ($produtos as $produto) {
+                $data[$produto->preco_produto] = $produto->preco_produto;
+            }
+            return $data;
         }
-        return $data;
-    }
 
-    public static function getProdutos2($num_produto)
-    {
-        $produtos = TbProduto::find()
-        ->where(['num_produto' => $num_produto])
-        ->one();
+    //Para o javascript de preenchimento automático
+        public static function getProdutos2($num_produto)
+        {
+            $produtos = TbProduto::find()
+            ->where(['num_produto' => $num_produto])
+            ->one();
 
-        //var_dump($produtos);
+            //var_dump($produtos);
 
-        //return $produtos;
+            //return $produtos;
 
-        $itens[] =[
+            $itens[] =[
 
-            $produtos['num_produto'],
-            $produtos['nome_produto'],
-            $produtos['estado_produto'],
-            $produtos['preco_produto'],
-        ];
+                $produtos['num_produto'],
+                $produtos['nome_produto'],
+                $produtos['estado_produto'],
+                $produtos['preco_produto'],
+            ];
 
-foreach($itens as $data){
-    return $data;
-}
-
+            foreach($itens as $data){
+                return $data;
+            }
 
 
-        /*$data = [];
-        foreach ($produtos as $produto) {
-            $data[$produto->num_produto] = $produto->num_produto;
-            $data[$produto->nome_produto] = $produto->nome_produto;
-            $data[$produto->estado_produto] = $produto->estado_produto;
-            $data[$produto->preco_produto] = $produto->preco_produto;
+
+            /*$data = [];
+            foreach ($produtos as $produto) {
+                $data[$produto->num_produto] = $produto->num_produto;
+                $data[$produto->nome_produto] = $produto->nome_produto;
+                $data[$produto->estado_produto] = $produto->estado_produto;
+                $data[$produto->preco_produto] = $produto->preco_produto;
+            }
+            return $data;*/
         }
-        return $data;*/
-    }
 
+
+    //Para o javascript de preenchimento automático
+        public static function getProdutosSaldoEstoque($num_produto)
+        {
+            $query = "
+                SELECT
+                    p.num_produto,
+                    p.nome_produto,
+                    p.estado_produto,
+                    p.preco_produto,
+                    e.id_estoque,
+                    e.qtd_itens,
+                    e.endereco_item
+                FROM
+                    tb_produto p
+                JOIN
+                    tb_estoque e ON p.num_produto = e.num_produto
+                WHERE
+                    p.num_produto = :num_produto
+            ";
+
+            // Execute a consulta SQL usando o Yii2
+            $produtos = Yii::$app->db->createCommand($query)
+                ->bindValue(':num_produto', $num_produto)
+                ->queryOne();
+
+                //var_dump($produtos);die;
+
+                $itens[] =[
+
+                    $produtos['num_produto'],
+                    $produtos['nome_produto'],
+                    $produtos['estado_produto'],
+                    $produtos['preco_produto'],
+                    $produtos['qtd_itens'],
+                    $produtos['endereco_item'],
+                    $produtos['id_estoque']
+                ];
+
+                foreach($itens as $data){
+                    return $data;
+                }
+        }
 
 }

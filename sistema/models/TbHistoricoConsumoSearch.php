@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\TbCliente;
+use app\models\TbHistoricoConsumo;
 
 /**
- * TbClienteSearch represents the model behind the search form of `app\models\TbCliente`.
+ * TbHistoricoConsumoSearch represents the model behind the search form of `app\models\TbHistoricoConsumo`.
  */
-class TbClienteSearch extends TbCliente
+class TbHistoricoConsumoSearch extends TbHistoricoConsumo
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class TbClienteSearch extends TbCliente
     public function rules()
     {
         return [
-            [['cpf_cnpj', 'nome', 'data_nascimento', 'email', 'telefone', 'cep', 'rua', 'complemento', 'bairro', 'cidade', 'uf'], 'safe'],
-            [['numero'], 'integer'],
+            [['id_consumo', 'id_estoque', 'id_num_produto', 'qtd_consumida'], 'integer'],
+            [['id_cliente_cpf_cnpj', 'data_consumo'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class TbClienteSearch extends TbCliente
      */
     public function search($params)
     {
-        $query = TbCliente::find();
+        $query = TbHistoricoConsumo::find();
 
         // add conditions that should always apply here
 
@@ -58,20 +58,14 @@ class TbClienteSearch extends TbCliente
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'data_nascimento' => $this->data_nascimento,
-            'numero' => $this->numero,
+            'id_consumo' => $this->id_consumo,
+            'id_estoque' => $this->id_estoque,
+            'id_num_produto' => $this->id_num_produto,
+            'qtd_consumida' => $this->qtd_consumida,
+            'data_consumo' => $this->data_consumo,
         ]);
 
-        $query->andFilterWhere(['like', 'cpf_cnpj', $this->cpf_cnpj])
-            ->andFilterWhere(['like', 'nome', $this->nome])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'telefone', $this->telefone])
-            ->andFilterWhere(['like', 'cep', $this->cep])
-            ->andFilterWhere(['like', 'rua', $this->rua])
-            ->andFilterWhere(['like', 'complemento', $this->complemento])
-            ->andFilterWhere(['like', 'bairro', $this->bairro])
-            ->andFilterWhere(['like', 'cidade', $this->cidade])
-            ->andFilterWhere(['like', 'uf', $this->uf]);
+        $query->andFilterWhere(['like', 'id_cliente_cpf_cnpj', $this->id_cliente_cpf_cnpj]);
 
         return $dataProvider;
     }

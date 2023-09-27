@@ -7,42 +7,35 @@ use yii\helpers\Url;
 use kartik\grid\EditableColumn;
 use yii\bootstrap\Collapse;
 use yii\data\ActiveDataProvider;
-use yii\bootstrap\Modal;
+//use yii\bootstrap\Modal;
 use yii\widgets\Pjax;
 use kartik\export\ExportMenu;
 use kartik\editable\Editable;
 use yii\widgets\DatePicker;
+use app\models\TbCliente;
 use app\models\TbProduto;
+use app\models\TbEstoque;
 use kartik\select2\Select2;
 
 use yii\helpers\ArrayHelper;
 use app\models\TbProdutoSearch;
 use yii\widgets\MaskedInput;
+use yii\bootstrap4\Modal;
 
-//use yii;
-//use yii\grid\GridView;
+$clienteModel = new TbCliente();
 $produtoModel = new TbProduto();
+$estoqueModel = new TbEstoque();
 
-$this->title = Yii::t('app', 'Saldo Estoque');
 
 /** @var yii\web\View $this */
-/** @var app\models\TbEstoque $model */
+/** @var app\models\TbHistoricoConsumo $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
-
 <div class="content">
-    <?php
-    //var_dump($produtoModel);die;
-    //$produtos=$produtoModel->getProdutos();
-    //var_dump($produtos);
+    <div class="tb-historico-consumo-form">
 
-    //echo "<br><br>";
-    //echo "este é o resultado: ";
-
-    ?>
-
-    <div class="tb-estoque-form">
         <?php $form = ActiveForm::begin(); ?>
+
             <section class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -116,13 +109,26 @@ $this->title = Yii::t('app', 'Saldo Estoque');
                                                         'pluginEvents' => [
                                                             "change" => "function() {
                                                                 if ($(this).val().length > 3) {
-                                                                    $.post('/tb-estoque/obter-dados?num_produto=' + $(this).val(), function(data) {
+                                                                    $.post('/tb-estoque/obter-dados-saldo-estoque?num_produto=' + $(this).val(), function(data) {
                                                                         var vl = JSON.parse(data);
                                                                         $('input#nome_produto').val(vl[1]);
                                                                         $('input#estado_produto').val(vl[2]);
 
                                                                         $('input#preco_produto').val('R$ ' + Number(vl[3]).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                                                                         $('input#num_produto_estoque').val(vl[0]);
+                                                                        $('input#tbestoque-qtd_itens').val(vl[4]);
+                                                                        $('input#tbestoque-endereco_item').val(vl[5]);
+                                                                        $('input#tbestoque-id_estoque').val(vl[6]);
+
+                                                                        $('input#tbhistoricoconsumo-id_num_produto').val(vl[0]);
+                                                                        $('input#tbhistoricoconsumo-id_estoque').val(vl[6]);
+
+
+
+
+
+
+
 
                                                                         //Para vincular o código do produto à ID Estoque
                                                                         var num_produto_estoque = $('#num_produto_estoque').val();
@@ -144,7 +150,7 @@ $this->title = Yii::t('app', 'Saldo Estoque');
                                                     <?php //echo $numProduto;
                                                     //var_dump(TbProduto::getProdutos()); die; ?>
                                                 </div>
-                                                <div class="col-lg-4 col-sm-12 col-xs-12 col-md-6">
+                                                <div class="col-lg-6 col-sm-12 col-xs-12 col-md-6">
                                                     <?= $form->field($produtoModel, 'nome_produto')->textInput(['readonly'=> true, 'maxlength' => true, 'id' => 'nome_produto', ])->label('Nome Produto') ?>
                                                 </div>
                                                 <div class="col-lg-2 col-sm-12 col-xs-12 col-md-6">
@@ -175,7 +181,7 @@ $this->title = Yii::t('app', 'Saldo Estoque');
 
                                             }
                                         ?>
-                                     </div>
+                                        </div>
 
                                 </div>
                             </div>
@@ -192,42 +198,18 @@ $this->title = Yii::t('app', 'Saldo Estoque');
                                 <div class="card-header">
                                     <h3 class="card-title">
                                     <i class="fas fa-edit"></i>
-                                    <h4>&nbsp2 - Saldo Estoque:</h4>
+                                    <h4>&nbsp2 - Saldo Estoque:  </h4>
                                     </h3>
                                 </div>
-
                                 <div class="col-lg-12 col-sm-12 col-xs-12 col-md-6">
-
                                     <div class="container-fluid w-auto row">
-                                    <?= $form->field($model, 'id_estoque')->textInput([
-                                            'type'=>"hidden",
-                                            'id' => 'id_estoque',
-                                        ])->label('')
-                                    ?>
-                                        <!--div class="col-lg-2 col-sm-12 col-xs-12 col-md-6"-->
-                                            <!--?= $form->field($model, 'id_estoque')->textInput() ?-->
-                                            <?= $form->field($model, 'num_produto')->textInput(['type'=>"hidden",'id' => 'num_produto_estoque'])->label('') ?>
-
-
-
-                                        <!--/div-->
-
-                                        <div class="col-lg-1 col-sm-12 col-xs-12 col-md-6">
-                                            <?= $form->field($model, 'qtd_itens')->textInput()->label('Qtd Itens') ?>
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 col-md-6">
+                                        <?= $form->field($estoqueModel, 'id_estoque')->textInput(['readonly'=> true])->label('Id Estoque') ?>
+                                            <?= $form->field($estoqueModel, 'qtd_itens')->textInput(['readonly'=> true])->label('Qtd Itens') ?>
                                         </div>
-                                        <div class="col-lg-2 col-sm-12 col-xs-12 col-md-6">
-                                            <?= $form->field($model, 'endereco_item')->textInput(['maxlength' => true])->label('Endereço Item') ?>
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 col-md-6">
+                                            <?= $form->field($estoqueModel, 'endereco_item')->textInput(['readonly'=> true, 'maxlength' => true])->label('Endereço Item') ?>
                                         </div>
-
-                                        <!-- Botão Gravar da tela principal -->
-
-                                        <div class="form-group col-lg-1 col-sm-12 col-xs-12 col-md-6 ">
-                                            <label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-                                            <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Salvar') : Yii::t('app', '<i class="glyphicon glyphicon-floppy-save"></i>&nbspAtualizar'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary btn-sm']) ?>
-                                        </div>
-                                        <!--div class="form-group"-->
-                                            <!--?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?-->
-                                        <!--/div-->
                                     </div>
 
                                 </div>
@@ -236,42 +218,75 @@ $this->title = Yii::t('app', 'Saldo Estoque');
                     </div>
                 </div>
             </section>
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-primary card-outline">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                    <i class="fas fa-edit"></i>
+                                    <h4>&nbsp3 - Inserir consumo:  </h4>
+                                    </h3>
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-xs-12 col-md-6">
+                                    <div class="container-fluid w-auto row">
+                                            <?= $form->field($model, 'id_estoque')->textInput(['readonly'=> true]) ?>
+                                            <?= $form->field($model, 'id_num_produto')->textInput(['readonly'=> true]) ?>
+                                            <?= $form->field($model, 'id_cliente_cpf_cnpj')->widget(MaskedInput::class, [
+                                                'mask' => ['999.999.999-99', '99.999.999/9999-99'], // Define as máscaras para CPF e CNPJ
+                                                'options' => ['maxlength' => true],
+                                                'clientOptions' => [
+                                                    'removeMaskOnSubmit' => true, // Remove a máscara antes de enviar o formulário
+                                                ],
+                                            ])->textInput(['maxlength' => true, 'readonly' => true]) ?>
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 col-md-6">
+                                            <?= $form->field($model, 'qtd_consumida')->textInput() ?>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 col-md-6">
+                                            <?= $form->field($model, 'data_consumo')->textInput(['type' => 'date']) ?>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+        <?php //$form->field($model, 'id_cliente_cpf_cnpj')->textInput() ?>
+
+
+
+        <?php  //$form->field($model, 'id_consumo')->textInput() ?>
+
+        <?php //$form->field($model, 'id_estoque')->textInput() ?>
+
+        <?php //$form->field($model, 'id_num_produto')->textInput() ?>
+
+
+
+
+        <div class="modal-footer justify-content-between">
+            <div class="col-lg-2 ">
+            </div>
+            <div class="col-lg-4 ">
+                <?= Html::submitButton(Yii::t('app', 'Adicionar Consumo'), ['class' => 'btn btn-success btn-sm']) ?>
+            </div>
+            <div class="col-lg-2 ">
+                <button type="button" class="btn btn-danger btn-block btn-sm" data-dismiss="modal"> Sair</button>
+            </div>
+            <div class="col-lg-2 ">
+            </div>
+
+            </div>
+
         <?php ActiveForm::end(); ?>
 
     </div>
+
 </div>
-
-
-
-
-<script>
-
-const numProdutoSelect2 = document.getElementById('num_produto_select2');
-const nomeProdutoInput = document.getElementById('tbproduto-nome_produto');
-
-numProdutoSelect2.addEventListener('change', function(){
-    const selectedNumProduto = numProdutoSelect2.value;
-    nomeProdutoInput.innerHTML = '';
-
-    if(selectedNumProduto !== ''){
-        const url = '<?= Url::to(['tb-produto/get-produtos']) ?>' + '?num_produto=' + encodeURIComponent(selectedNumProduto);
-
-        fetch(url)
-            .then(response => response.json())
-            .then(produtos => {
-                produtos.forEach(produto => {
-                    const option = document.createElement('option');
-                    option.value = produto;
-                    option.textConten =produto;
-                    nomeProdutoInput.appendChild(option);
-                });
-
-            })
-            .catch(error => {
-                console.error('Erro ao buscar Nome do Produto:', error);
-            });
-    }
-
-});
-
-</script>
