@@ -85,14 +85,14 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Voltar'), 'url' => '
                                                 'clientOptions' => [
                                                     'removeMaskOnSubmit' => true, // Remove a máscara antes de enviar o formulário
                                                 ],
-                                            ])->textInput(['maxlength' => true, 'readonly' => true]) ?>
+                                            ])->textInput(['maxlength' => true, 'readonly' => true])->label('CPF / CNPJ') ?>
 
                                         </div>
                                         <div class="col-lg-6 col-sm-12 col-xs-12 col-md-6">
-                                            <?= $form->field($model, 'nome')->textInput(['maxlength' => true,'readonly' => true]) ?>
+                                            <?= $form->field($model, 'nome')->textInput(['maxlength' => true,'readonly' => true])->label('Nome Cliente') ?>
                                         </div>
                                         <div class="col-lg-2 col-sm-12 col-xs-12 col-md-6">
-                                        <?= $form->field($model, 'data_nascimento')->textInput(['type' => 'date', 'readonly' => true]) ?>
+                                        <?= $form->field($model, 'data_nascimento')->textInput(['type' => 'date', 'readonly' => true])->label('Data de Nascimento') ?>
                                         </div>
                                         <div class="col-lg-2 col-sm-12 col-xs-12 col-md-6">
                                             <?= $form->field($model, 'telefone')->widget(MaskedInput::class, [
@@ -101,12 +101,12 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Voltar'), 'url' => '
                                                 'clientOptions' => [
                                                     'removeMaskOnSubmit' => true,
                                                 ],
-                                            ])->textInput(['maxlength' => true, 'readonly' => true]) ?>
+                                            ])->textInput(['maxlength' => true, 'readonly' => true])->label('Telefone / Celular') ?>
                                         </div>
                                     </div>
                                     <div class="container-fluid w-auto row">
                                         <div class="col-lg-4 col-sm-12 col-xs-12 col-md-6">
-                                            <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'readonly' => true]) ?>
+                                            <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'readonly' => true])->label('E-mail') ?>
                                         </div>
                                     </div>
                                 </div>
@@ -130,25 +130,25 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Voltar'), 'url' => '
                                 <div class="col-lg-12 col-sm-12 col-xs-12 col-md-6">
                                     <div class="container-fluid w-auto row">
                                         <div class="col-lg-6 col-sm-12 col-xs-12 col-md-6">
-                                            <?= $form->field($model, 'rua')->textInput(['maxlength' => true, 'readonly' => true]) ?>
+                                            <?= $form->field($model, 'rua')->textInput(['maxlength' => true, 'readonly' => true])->label('Rua / Av') ?>
                                         </div>
                                         <div class="col-lg-2 col-sm-12 col-xs-12 col-md-6">
-                                        <?= $form->field($model, 'numero')->textInput(['maxlength' => true, 'readonly' => true]) ?>
+                                        <?= $form->field($model, 'numero')->textInput(['maxlength' => true, 'readonly' => true])->label('Número') ?>
                                         </div>
 
                                         <div class="col-lg-4 col-sm-12 col-xs-12 col-md-6">
-                                        <?= $form->field($model, 'complemento')->textInput(['maxlength' => true, 'readonly' => true]) ?>
+                                        <?= $form->field($model, 'complemento')->textInput(['maxlength' => true, 'readonly' => true])->label('Complemento') ?>
                                         </div>
                                     </div>
                                     <div class="container-fluid w-auto row">
                                         <div class="col-lg-4 col-sm-12 col-xs-12 col-md-6">
-                                        <?= $form->field($model, 'bairro')->textInput(['maxlength' => true, 'readonly' => true]) ?>
+                                        <?= $form->field($model, 'bairro')->textInput(['maxlength' => true, 'readonly' => true])->label('Bairro') ?>
                                         </div>
                                         <div class="col-lg-4 col-sm-12 col-xs-12 col-md-6">
-                                        <?= $form->field($model, 'cidade')->textInput(['maxlength' => true, 'readonly' => true]) ?>
+                                        <?= $form->field($model, 'cidade')->textInput(['maxlength' => true, 'readonly' => true])->label('Cidade') ?>
                                         </div>
                                         <div class="col-lg-2 col-sm-12 col-xs-12 col-md-6">
-                                        <?= $form->field($model, 'uf')->textInput(['maxlength' => true, 'readonly' => true]) ?>
+                                        <?= $form->field($model, 'uf')->textInput(['maxlength' => true, 'readonly' => true])->label('UF') ?>
                                         </div>
                                         <div class="col-lg-2 col-sm-12 col-xs-12 col-md-6">
                                         <?= $form->field($model, 'cep')->widget(MaskedInput::class, [
@@ -157,7 +157,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Voltar'), 'url' => '
                                                 'clientOptions' => [
                                                     'removeMaskOnSubmit' => true,
                                                 ],
-                                            ])->textInput(['maxlength' => true, 'readonly' => true]) ?>
+                                            ])->textInput(['maxlength' => true, 'readonly' => true])->label('CEP') ?>
                                         </div>
                                     </div>
                                     <div class="container-fluid w-auto row">
@@ -267,7 +267,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Voltar'), 'url' => '
                                                             'attribute' => 'data_consumo',
                                                             'format' => ['date', 'php:d-m-Y'],
                                                             //Título para exibição da coluna
-                                                            'header' => 'Data',
+                                                            'header' => 'Data Consumo',
                                                             //Configuração/Estilo do título da coluna
                                                             'headerOptions' => [
                                                                 'style' => 'text-align: center; width: 15%;'
@@ -301,7 +301,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Voltar'), 'url' => '
                                                         //'nome',
                                                         [
                                                             'attribute' => 'num_produto',
-                                                            'header' => 'Código Produto',
+                                                            'header' => 'Cód. Produto',
                                                             'headerOptions' => [
                                                                 'style' => 'text-align: center; width: 9%;'
                                                             ],
@@ -387,7 +387,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Voltar'), 'url' => '
                                                         //'qtd_consumida',
                                                         [
                                                             'attribute' => 'qtd_consumida',
-                                                            'header' => 'Quantidade Cosumida',
+                                                            'header' => 'Qtd. Cosumida',
                                                             'headerOptions' => [
                                                                 'style' => 'text-align: center; width: 9%;'
                                                             ],

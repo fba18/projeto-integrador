@@ -50,19 +50,23 @@ $estoqueModel = new TbEstoque();
                                 <div class="col-lg-12 col-sm-12 col-xs-12 col-md-6">
                                     <div class="container-fluid w-auto row">
                                         <div class="col-lg-2 col-sm-12 col-xs-12 col-md-6">
-
+                                        <?php //$form->field($clienteModel, 'cpf_cnpj')->textInput(['readonly'=> true]) ?>
                                         <?= $form->field($clienteModel, 'cpf_cnpj')->widget(Select2::classname(), [
-                                                'data' => TbCliente::getCliente(),
-                                                'options' => ['placeholder' => 'Selecione CPF ou CNPJ', 'id' => 'cpf_cnpj_select2'],
+                                                'data' => TbCliente::getCpfCliente(),
+                                                'options' => [
+                                                    'placeholder' => 'Selecione CPF ou CNPJ',
+                                                    //'id' => 'cpf_cnpj_select2'
+                                                ],
                                                 'pluginOptions' => [
                                                     'allowClear' => true,
                                                 ],
                                                 'pluginEvents' => [
                                                     "change" => "function() {
                                                         if ($(this).val().length > 3) {
-                                                            $.post('/tb-historico-consumo/obter-dados-cliente?cpf_cnpj=' + $(this).val(), function(data) {
+                                                            $.post('/tb-historico-consumo/obter-dados-cliente-cpf-cnpj?cpf_cnpj=' + $(this).val(), function(data) {
                                                                 var vl = JSON.parse(data);
-                                                                $('input#tbcliente-nome').val(vl[1]);
+                                                                $('#tbcliente-nome').val(vl[1]).trigger('change'); // Trigger 'change' event
+                                                                //$('input#tbcliente-nome').val(vl[1]);
                                                                 $('input#tbcliente-data_nascimento').val(vl[2]);
                                                                 $('input#tbcliente-telefone').val(vl[3]);
                                                                 $('input#tbcliente-email').val(vl[4]);
@@ -96,10 +100,58 @@ $estoqueModel = new TbEstoque();
                                             ?>
                                         </div>
                                         <div class="col-lg-6 col-sm-12 col-xs-12 col-md-6">
-                                            <?= $form->field($clienteModel, 'nome')->textInput(['maxlength' => true]) ?>
+                                            <?php //$form->field($clienteModel, 'nome')->textInput(['maxlength' => true]) ?>
+                                            <?= $form->field($clienteModel, 'nome')->widget(Select2::classname(), [
+                                                'data' => TbCliente::getNomeCliente(),
+                                                'options' =>
+                                                [
+                                                    'placeholder' => 'Selecione nome do Cliente',
+                                                    //'id' => 'nome_select2'
+                                                ],
+                                                'pluginOptions' => [
+                                                    'allowClear' => true,
+                                                ],
+                                                'pluginEvents' => [
+                                                    "change" => "function() {
+                                                        if ($(this).val().length > 3) {
+                                                            $.post('/tb-historico-consumo/obter-dados-cliente-nome?nome=' + $(this).val(), function(data) {
+                                                                var vl = JSON.parse(data);
+                                                                $('#tbcliente-cpf_cnpj').val(vl[0]).trigger('change'); // Trigger 'change' event
+                                                                $('input#tbcliente-nome').val(vl[1]);
+                                                                $('input#tbcliente-data_nascimento').val(vl[2]);
+                                                                $('input#tbcliente-telefone').val(vl[3]);
+                                                                $('input#tbcliente-email').val(vl[4]);
+                                                                $('input#tbcliente-rua').val(vl[5]);
+                                                                $('input#tbcliente-numero').val(vl[6]);
+                                                                $('input#tbcliente-complemento').val(vl[7]);
+                                                                $('input#tbcliente-bairro').val(vl[8]);
+                                                                $('input#tbcliente-cidade').val(vl[9]);
+                                                                $('input#tbcliente-uf').val(vl[10]);
+                                                                $('input#tbcliente-cep').val(vl[11]);
+                                                                $('input#tbhistoricoconsumo-id_cliente_cpf_cnpj').val(vl[0]);
+
+
+
+                                                                /*$('input#preco_produto').val('R$ ' + Number(vl[3]).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                                                                $('input#num_produto_estoque').val(vl[0]);*/
+
+                                                                /*//Para vincular o código do produto à ID Estoque
+                                                                var num_produto_estoque = $('#num_produto_estoque').val();
+                                                                var id_estoque = $('#id_estoque');
+
+                                                                id_estoque.val(num_produto_estoque);*/
+
+                                                            });
+                                                        } else {
+                                                            alert('Erro');
+                                                        }
+                                                    }",
+                                                ],
+                                            ]);
+                                            ?>
                                         </div>
                                         <div class="col-lg-2 col-sm-12 col-xs-12 col-md-6">
-                                        <?= $form->field($clienteModel, 'data_nascimento')->textInput(['type' => 'date']) ?>
+                                        <?= $form->field($clienteModel, 'data_nascimento')->textInput(['readonly'=> true, 'type' => 'date']) ?>
                                         </div>
                                         <div class="col-lg-2 col-sm-12 col-xs-12 col-md-6">
                                             <?= $form->field($clienteModel, 'telefone')->widget(MaskedInput::class, [
@@ -108,12 +160,12 @@ $estoqueModel = new TbEstoque();
                                                 'clientOptions' => [
                                                     'removeMaskOnSubmit' => true,
                                                 ],
-                                            ])->textInput(['maxlength' => true]) ?>
+                                            ])->textInput(['readonly'=> true, 'maxlength' => true]) ?>
                                         </div>
                                     </div>
                                     <div class="container-fluid w-auto row">
                                         <div class="col-lg-4 col-sm-12 col-xs-12 col-md-6">
-                                            <?= $form->field($clienteModel, 'email')->textInput(['maxlength' => true]) ?>
+                                            <?= $form->field($clienteModel, 'email')->textInput(['readonly'=> true, 'maxlength' => true]) ?>
                                         </div>
                                     </div>
                                 </div>
@@ -137,25 +189,25 @@ $estoqueModel = new TbEstoque();
                                 <div class="col-lg-12 col-sm-12 col-xs-12 col-md-6">
                                     <div class="container-fluid w-auto row">
                                         <div class="col-lg-6 col-sm-12 col-xs-12 col-md-6">
-                                            <?= $form->field($clienteModel, 'rua')->textInput(['maxlength' => true]) ?>
+                                            <?= $form->field($clienteModel, 'rua')->textInput(['readonly'=> true, 'maxlength' => true]) ?>
                                         </div>
                                         <div class="col-lg-2 col-sm-12 col-xs-12 col-md-6">
-                                        <?= $form->field($clienteModel, 'numero')->textInput(['maxlength' => true]) ?>
+                                        <?= $form->field($clienteModel, 'numero')->textInput(['readonly'=> true, 'maxlength' => true]) ?>
                                         </div>
 
                                         <div class="col-lg-4 col-sm-12 col-xs-12 col-md-6">
-                                        <?= $form->field($clienteModel, 'complemento')->textInput(['maxlength' => true]) ?>
+                                        <?= $form->field($clienteModel, 'complemento')->textInput(['readonly'=> true, 'maxlength' => true]) ?>
                                         </div>
                                     </div>
                                     <div class="container-fluid w-auto row">
                                         <div class="col-lg-4 col-sm-12 col-xs-12 col-md-6">
-                                        <?= $form->field($clienteModel, 'bairro')->textInput(['maxlength' => true]) ?>
+                                        <?= $form->field($clienteModel, 'bairro')->textInput(['readonly'=> true, 'maxlength' => true]) ?>
                                         </div>
                                         <div class="col-lg-4 col-sm-12 col-xs-12 col-md-6">
-                                        <?= $form->field($clienteModel, 'cidade')->textInput(['maxlength' => true]) ?>
+                                        <?= $form->field($clienteModel, 'cidade')->textInput(['readonly'=> true, 'maxlength' => true]) ?>
                                         </div>
                                         <div class="col-lg-2 col-sm-12 col-xs-12 col-md-6">
-                                        <?= $form->field($clienteModel, 'uf')->textInput(['maxlength' => true]) ?>
+                                        <?= $form->field($clienteModel, 'uf')->textInput(['readonly'=> true, 'maxlength' => true]) ?>
                                         </div>
                                         <div class="col-lg-2 col-sm-12 col-xs-12 col-md-6">
                                         <?= $form->field($clienteModel, 'cep')->widget(MaskedInput::class, [
@@ -164,7 +216,7 @@ $estoqueModel = new TbEstoque();
                                                 'clientOptions' => [
                                                     'removeMaskOnSubmit' => true,
                                                 ],
-                                            ])->textInput(['maxlength' => true]) ?>
+                                            ])->textInput(['readonly'=> true, 'maxlength' => true]) ?>
                                         </div>
                                     </div>
                                 </div>
@@ -388,8 +440,10 @@ $estoqueModel = new TbEstoque();
                                         </div>
                                     </div>
                                     <div class="container-fluid w-auto row">
-                                        <div class="form-group">
-                                            <?= Html::submitButton(Yii::t('app', 'Inserir Consumo'), ['class' => 'btn btn-success']) ?>
+                                        <div class="col-lg-12 col-sm-12 col-xs-12 col-md-6">
+                                            <div class="form-group">
+                                                <?= Html::submitButton(Yii::t('app', 'Inserir Consumo'), ['class' => 'btn btn-success']) ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

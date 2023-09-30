@@ -54,9 +54,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     'type'=>'primary',
 
-                    'before'=>
+                    /*'before'=>
                         Html::a('<i class="fa fa-sync fa-spin" style="animation-iteration-count: 1;animation-duration: 0.3s"></i> Limpar Filtros'
-                        , ['tb-cliente/index-consumo'], ['class' => 'btn btn-primary btn-sm']),
+                        , ['tb-cliente/index-consumo'], ['class' => 'btn btn-primary btn-sm']),*/
 
 
                     'footer'=>'',
@@ -96,7 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'preco_produto',
                         'label' => 'Preço Produto',
                     ],
-                    'id_estoque',
+                    //'id_estoque',
 
                     //'qtd_itens',
                     /*[
@@ -116,21 +116,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     //'data_consumo',
                     [
                         'attribute' => 'data_consumo',
-                        'label' => 'Data de Consumo',
+                        'label' => 'Data Consumo',
                         'format' => ['date', 'php:d/m/Y']
                     ],
 
-                    //'data_nascimento',
-                    //'email:email',
-                    //'telefone',
-                    //'cep',
-                    //'rua',
-                    //'numero',
-                    //'complemento',
-                    //'bairro',
-                    //'cidade',
-                    //'uf',
-                    //'tb_clientecol',
+
                     /*[
                         'class' => ActionColumn::className(),
                         'urlCreator' => function ($action, TbCliente $model, $key, $index, $column) {

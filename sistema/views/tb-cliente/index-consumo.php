@@ -55,9 +55,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     'type'=>'primary',
 
-                    'before'=>
+                    /*'before'=>
                         Html::a('<i class="fa fa-sync fa-spin" style="animation-iteration-count: 1;animation-duration: 0.3s"></i> Limpar Filtros'
-                        , ['index'], ['class' => 'btn btn-primary btn-sm']),
+                        , ['index'], ['class' => 'btn btn-primary btn-sm']),*/
 
 
                     'footer'=>'',

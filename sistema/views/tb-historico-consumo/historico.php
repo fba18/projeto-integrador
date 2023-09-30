@@ -111,7 +111,9 @@ $estoqueModel = new TbEstoque();
                                                                 if ($(this).val().length > 3) {
                                                                     $.post('/tb-estoque/obter-dados-saldo-estoque?num_produto=' + $(this).val(), function(data) {
                                                                         var vl = JSON.parse(data);
-                                                                        $('input#nome_produto').val(vl[1]);
+                                                                        //$('input#nome_produto').val(vl[1]);
+
+                                                                        $('#tbproduto-nome_produto').val(vl[1]).trigger('change'); // Trigger 'change' event
                                                                         $('input#estado_produto').val(vl[2]);
 
                                                                         $('input#preco_produto').val('R$ ' + Number(vl[3]).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
@@ -142,7 +144,7 @@ $estoqueModel = new TbEstoque();
                                                                 }
                                                             }",
                                                         ],
-                                                    ]);
+                                                    ])->label('Cód. Produto');
 
 
 
@@ -151,7 +153,54 @@ $estoqueModel = new TbEstoque();
                                                     //var_dump(TbProduto::getProdutos()); die; ?>
                                                 </div>
                                                 <div class="col-lg-6 col-sm-12 col-xs-12 col-md-6">
-                                                    <?= $form->field($produtoModel, 'nome_produto')->textInput(['readonly'=> true, 'maxlength' => true, 'id' => 'nome_produto', ])->label('Nome Produto') ?>
+                                                    <?php //$form->field($produtoModel, 'nome_produto')->textInput(['readonly'=> true, 'maxlength' => true, 'id' => 'nome_produto', ])->label('Nome Produto') ?>
+                                                    <?= $form->field($produtoModel, 'nome_produto')->widget(Select2::classname(), [
+                                                        'data' => TbProduto::getProdutosNome(),
+                                                        'options' => [
+                                                            'placeholder' => 'Selecione um produto',
+                                                            //'id' => 'endereco_item_select2'
+                                                        ],
+                                                        'pluginEvents' => [
+                                                            "change" => "function() {
+                                                                if ($(this).val().length > 3) {
+                                                                    $.post('/tb-estoque/obter-dados-saldo-estoque-nome-produto?nome_produto=' + $(this).val(), function(data) {
+                                                                        var vl = JSON.parse(data);
+
+                                                                        $('#num_produto_select2').val(vl[0]).trigger('change'); // Trigger 'change' event
+                                                                        $('input#estado_produto').val(vl[2]);
+
+                                                                        $('input#preco_produto').val('R$ ' + Number(vl[3]).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                                                                        $('input#num_produto_estoque').val(vl[0]);
+                                                                        $('input#tbestoque-qtd_itens').val(vl[4]);
+                                                                        $('input#tbestoque-endereco_item').val(vl[5]);
+                                                                        $('input#tbestoque-id_estoque').val(vl[6]);
+
+                                                                        $('input#tbhistoricoconsumo-id_num_produto').val(vl[0]);
+                                                                        $('input#tbhistoricoconsumo-id_estoque').val(vl[6]);
+
+
+
+
+
+
+
+
+                                                                        //Para vincular o código do produto à ID Estoque
+                                                                        var num_produto_estoque = $('#num_produto_estoque').val();
+                                                                        var id_estoque = $('#id_estoque');
+
+                                                                        id_estoque.val(num_produto_estoque);
+
+                                                                    });
+                                                                } else {
+                                                                    alert('Erro');
+                                                                }
+                                                            }",
+                                                        ],
+
+
+                                                        ])->label('Nome Produto');
+                                                    ?>
                                                 </div>
                                                 <div class="col-lg-2 col-sm-12 col-xs-12 col-md-6">
                                                     <?= $form->field($produtoModel, 'estado_produto')->textInput(['readonly'=> true, 'maxlength' => true, 'id' => 'estado_produto'])->label('Estado Produto') ?>
@@ -205,10 +254,10 @@ $estoqueModel = new TbEstoque();
                                     <div class="container-fluid w-auto row">
                                         <div class="col-lg-6 col-sm-12 col-xs-12 col-md-6">
                                         <?= $form->field($estoqueModel, 'id_estoque')->textInput(['readonly'=> true])->label('Id Estoque') ?>
-                                            <?= $form->field($estoqueModel, 'qtd_itens')->textInput(['readonly'=> true])->label('Qtd Itens') ?>
+                                            <?= $form->field($estoqueModel, 'qtd_itens')->textInput(['readonly'=> true])->label('Qtd. Disponível') ?>
                                         </div>
                                         <div class="col-lg-6 col-sm-12 col-xs-12 col-md-6">
-                                            <?= $form->field($estoqueModel, 'endereco_item')->textInput(['readonly'=> true, 'maxlength' => true])->label('Endereço Item') ?>
+                                            <?= $form->field($estoqueModel, 'endereco_item')->textInput(['readonly'=> true, 'maxlength' => true])->label('Endereço Produto') ?>
                                         </div>
                                     </div>
 
@@ -244,10 +293,10 @@ $estoqueModel = new TbEstoque();
                                             ])->hiddenInput(['maxlength' => true, 'readonly' => true]) ?>
                                         </div>
                                         <div class="col-lg-6 col-sm-12 col-xs-12 col-md-6">
-                                            <?= $form->field($model, 'qtd_consumida')->textInput() ?>
+                                            <?= $form->field($model, 'qtd_consumida')->textInput()->label('Qtd. Consumida') ?>
                                         </div>
                                         <div class="col-lg-6 col-sm-12 col-xs-12 col-md-6">
-                                            <?= $form->field($model, 'data_consumo')->textInput(['type' => 'date']) ?>
+                                            <?= $form->field($model, 'data_consumo')->textInput(['type' => 'date'])->label('Data Consumo') ?>
                                         </div>
                                     </div>
 

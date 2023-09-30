@@ -14,7 +14,7 @@ use yii\widgets\MaskedInput;
 <div class="tb-cliente-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index'],
+        'action' => ['index-consumo'],
         'method' => 'get',
     ]); ?>
 
@@ -51,7 +51,7 @@ use yii\widgets\MaskedInput;
                                     <div class="col-lg-4 col-sm-12 col-xs-12 col-md-6 btn-sm">
                                         <?php //Html::a('Cadastrar Cliente', ['create'], ['class' => 'btn btn-success btn-sm']) ?>
                                         <?= Html::submitButton(Yii::t('app', '<i class="bi bi-search"></i> Pesquisar'), ['class' => 'btn btn-primary btn-sm']) ?>
-                                        <?= Html::a('<i class="fa fa-sync fa-spin" style="animation-iteration-count: 1;animation-duration: 0.3s"></i> Limpar Filtros', ['index'], ['class' => 'btn btn-success btn-sm'])  ?>
+                                        <?= Html::a('<i class="fa fa-sync fa-spin" style="animation-iteration-count: 1;animation-duration: 0.3s"></i> Limpar Filtros', ['index-consumo'], ['class' => 'btn btn-success btn-sm'])  ?>
                                     </div>
                                 </div>
 

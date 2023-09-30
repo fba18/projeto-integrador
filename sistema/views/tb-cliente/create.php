@@ -6,7 +6,8 @@ use yii\helpers\Html;
 /** @var app\models\TbCliente $model */
 
 $this->title = Yii::t('app', 'Cadastrar Cliente');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Tb Clientes'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Voltar', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Tb Clientes'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tb-cliente-create">

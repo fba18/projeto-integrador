@@ -50,6 +50,31 @@ $this->registerJs($js, View::POS_READY);
 ?>
 <div class="content">
     <div class="tb-cliente-form">
+        <div id="message" class='col-lg-12 alertflipper '>
+            <?php if (Yii::$app->session->hasFlash('error')) : ?>
+            <div class="alert alert-danger alert-dismissible col-lg-4" style="position:absolute;top:200px;left:150px;z-index:1000000;">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                <h3>
+                <i class="icon fas fa-exclamation-triangle"></i>Atenção!
+                </h3>
+                <?= Yii::$app->session->getFlash('error') ?>
+            </div>
+
+            <?php endif; ?>
+
+            <?php if (Yii::$app->session->hasFlash('success')) : ?>
+            <div class="alert alert-success alert-dismissible col-lg-4" style="position:absolute;top:200px;left:150px;z-index:1000000;">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                <h3>
+                <i class="icon fas fa-exclamation-triangle"></i>Atenção!
+                </h3>
+                <?= Yii::$app->session->getFlash('success') ?>
+            </div>
+
+            <?php endif; ?>
+
+        </div>
+    <div class="tb-historico-consumo-form">
 
         <?php $form = ActiveForm::begin(); ?>
 

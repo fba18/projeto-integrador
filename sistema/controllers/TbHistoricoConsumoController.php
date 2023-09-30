@@ -35,6 +35,9 @@ class TbHistoricoConsumoController extends Controller
                         'delete' => ['POST'],
                     ],
                 ],
+                'access'=> [
+                    'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+                ],
             ]
         );
     }
@@ -198,11 +201,20 @@ class TbHistoricoConsumoController extends Controller
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 
-    //Para preenchimento automático via javascript
-    public  static function actionObterDadosCliente($cpf_cnpj){
+    //Para preenchimento automático via javascript CPF e CNPJ
+    public  static function actionObterDadosClienteCpfCnpj($cpf_cnpj){
 
         $clienteModel = new TbCliente();
-        $data = $clienteModel->getClientes($cpf_cnpj);
+        $data = $clienteModel->getClientesCpfCnpj($cpf_cnpj);
+        //var_dump($data);die;
+        return json_encode($data);
+    }
+
+    //Para preenchimento automático via javascript Nome
+    public  static function actionObterDadosClienteNome($nome){
+
+        $clienteModel = new TbCliente();
+        $data = $clienteModel->getClientesNome($nome);
         //var_dump($data);die;
         return json_encode($data);
     }

@@ -75,7 +75,7 @@ class TbCliente extends \yii\db\ActiveRecord
     }
 
     //Para o select2
-    public static function getCliente()
+    public static function getCpfCliente()
     {
         $clientes = self::find()->all();
         $data = [];
@@ -95,12 +95,76 @@ class TbCliente extends \yii\db\ActiveRecord
         }
         return $data;
     }
+    //Para o select2
+    public static function getNomeCliente()
+    {
+        $clientes = self::find()->all();
+        $data = [];
+        foreach ($clientes as $cliente) {
+            //$data[$cliente->cpf_cnpj] = $cliente->cpf_cnpj;
+            $data[$cliente->nome] = $cliente->nome;
+            /*$data[$cliente->data_nascimento] = $cliente->data_nascimento;
+            $data[$cliente->telefone] = $cliente->telefone;
+            $data[$cliente->email] = $cliente->email;
+            $data[$cliente->rua] = $cliente->rua;
+            $data[$cliente->numero] = $cliente->numero;
+            $data[$cliente->complemento] = $cliente->complemento;
+            $data[$cliente->bairro] = $cliente->bairro;
+            $data[$cliente->cidade] = $cliente->cidade;
+            $data[$cliente->uf] = $cliente->uf;
+            $data[$cliente->cep] = $cliente->cep;*/
+        }
+        return $data;
+    }
 
     //Para o javascript de preenchimento automático
-    public static function getClientes($cpf_cnpj)
+    public static function getClientesCpfCnpj($cpf_cnpj)
     {
         $cliente = TbCliente::find()
         ->where(['cpf_cnpj' => $cpf_cnpj])
+        ->one();
+
+        //var_dump($produtos);
+
+        //return $produtos;
+
+        $itens[] =[
+
+            $cliente['cpf_cnpj'],
+            $cliente['nome'],
+            $cliente['data_nascimento'],
+            $cliente['telefone'],
+            $cliente['email'],
+            $cliente['rua'],
+            $cliente['numero'],
+            $cliente['complemento'],
+            $cliente['bairro'],
+            $cliente['cidade'],
+            $cliente['uf'],
+            $cliente['cep'],
+        ];
+
+        foreach($itens as $data){
+            return $data;
+        }
+
+
+
+        /*$data = [];
+        foreach ($produtos as $produto) {
+            $data[$produto->num_produto] = $produto->num_produto;
+            $data[$produto->nome_produto] = $produto->nome_produto;
+            $data[$produto->estado_produto] = $produto->estado_produto;
+            $data[$produto->preco_produto] = $produto->preco_produto;
+        }
+        return $data;*/
+    }
+
+    //Para o javascript de preenchimento automático
+    public static function getClientesNome($nome)
+    {
+        $cliente = TbCliente::find()
+        ->where(['nome' => $nome])
         ->one();
 
         //var_dump($produtos);

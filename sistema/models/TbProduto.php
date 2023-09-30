@@ -160,7 +160,7 @@ class TbProduto extends \yii\db\ActiveRecord
         }
 
 
-    //Para o javascript de preenchimento automático
+    //Para o javascript de preenchimento automático pelo código produto
         public static function getProdutosSaldoEstoque($num_produto)
         {
             $query = "
@@ -202,5 +202,48 @@ class TbProduto extends \yii\db\ActiveRecord
                     return $data;
                 }
         }
+
+    //Para o javascript de preenchimento automático pelo código produto
+    public static function getProdutosSaldoEstoqueNomeProduto($nome_produto)
+    {
+        $query = "
+            SELECT
+                p.num_produto,
+                p.nome_produto,
+                p.estado_produto,
+                p.preco_produto,
+                e.id_estoque,
+                e.qtd_itens,
+                e.endereco_item
+            FROM
+                tb_produto p
+            JOIN
+                tb_estoque e ON p.num_produto = e.num_produto
+            WHERE
+                p.nome_produto = :nome_produto
+        ";
+
+        // Execute a consulta SQL usando o Yii2
+        $produtos = Yii::$app->db->createCommand($query)
+            ->bindValue(':nome_produto', $nome_produto)
+            ->queryOne();
+
+            //var_dump($produtos);die;
+
+            $itens[] =[
+
+                $produtos['num_produto'],
+                $produtos['nome_produto'],
+                $produtos['estado_produto'],
+                $produtos['preco_produto'],
+                $produtos['qtd_itens'],
+                $produtos['endereco_item'],
+                $produtos['id_estoque']
+            ];
+
+            foreach($itens as $data){
+                return $data;
+            }
+    }
 
 }

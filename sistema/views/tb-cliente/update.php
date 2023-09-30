@@ -8,9 +8,10 @@ use yii\helpers\Html;
 $this->title = Yii::t('app', 'Atualizar cliente: {name}', [
     'name' => $model->nome,
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Tb Clientes'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->cpf_cnpj, 'url' => ['view', 'cpf_cnpj' => $model->cpf_cnpj]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+//$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Tb Clientes'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Voltar', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = ['label' => $model->cpf_cnpj, 'url' => ['view', 'cpf_cnpj' => $model->cpf_cnpj]];
+$this->params['breadcrumbs'][] = Yii::t('app', 'Atualizar Cliente');
 ?>
 <div class="tb-cliente-update">
 

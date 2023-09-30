@@ -6,7 +6,8 @@ use yii\helpers\Html;
 /** @var app\models\TbHistoricoConsumo $model */
 
 $this->title = Yii::t('app', 'Inserir Consumo');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Tb Historico Consumos'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Voltar', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Tb Historico Consumos'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tb-historico-consumo-create">

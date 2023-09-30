@@ -34,6 +34,9 @@ class TbClienteController extends Controller
                         'delete' => ['POST'],
                     ],
                 ],
+                'access'=> [
+                    'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+                ],
             ]
         );
     }
@@ -90,7 +93,9 @@ class TbClienteController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'cpf_cnpj' => $model->cpf_cnpj]);
+                //return $this->redirect(['view', 'cpf_cnpj' => $model->cpf_cnpj]);
+                Yii::$app->session->setFlash('success', 'Cliente Cadastrado com sucesso!');
+                return $this->redirect(['update', 'cpf_cnpj' => $model->cpf_cnpj]);
             }
         } else {
             $model->loadDefaultValues();
@@ -113,7 +118,9 @@ class TbClienteController extends Controller
         $model = $this->findModel($cpf_cnpj);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'cpf_cnpj' => $model->cpf_cnpj]);
+            //return $this->redirect(['view', 'cpf_cnpj' => $model->cpf_cnpj]);
+            Yii::$app->session->setFlash('success', 'Dados Cliente atualizado com sucesso!');
+            return $this->redirect(['update', 'cpf_cnpj' => $model->cpf_cnpj]);
         }
 
         return $this->render('update', [
