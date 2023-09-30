@@ -87,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'format' => ['raw'],
                             //'label' => 'Preço Produto',
                             'value' => function ($model) {
-                               return \Yii::$app->formatter->asCurrency($model->preco_produto, 'R$ ');
+                               return \Yii::$app->formatter->asCurrency($model->preco_produto, 'BRL');
                             }
                          ],
 

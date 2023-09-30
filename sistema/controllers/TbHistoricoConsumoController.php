@@ -75,11 +75,69 @@ class TbHistoricoConsumoController extends Controller
      */
     public function actionCreate()
     {
-        $model = new TbHistoricoConsumo();
+        /*$model = new TbHistoricoConsumo();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id_consumo' => $model->id_consumo]);
+                //return $this->redirect(['view', 'id_consumo' => $model->id_consumo]);
+                //return $this->redirect(['tb-cliente/consumo-historico', 'cpf_cnpj' => $model->id_cliente_cpf_cnpj]);
+            }
+        } else {
+            $model->loadDefaultValues();
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);*/
+
+        $model = new TbHistoricoConsumo();
+
+        $hoje = date('Y-m-d');
+
+        $model->id_cliente_cpf_cnpj;
+        $model->data_consumo = $hoje;
+
+        $produtoModel = new TbProduto();
+        $estoqueModel = new TbEstoque();
+
+
+
+        if ($this->request->isPost) {
+            // Carregue os modelos TbProduto e TbEstoque com base nos dados fornecidos
+            $produtoModel->load($this->request->post());
+            $estoqueModel->load($this->request->post());
+            $model->load($this->request->post());
+            //echo $estoqueModel->qtd_itens."<br>";
+
+            $qtdItens = $estoqueModel->qtd_itens;
+            //echo $qtdItens;
+            $qtdConsumida = $model->qtd_consumida;
+            //echo "<br>". $qtdConsumida;
+
+
+            //var_dump($model->qtd_consumida);
+
+            if ($qtdConsumida <= $qtdItens) {
+                // Calcula a nova quantidade de itens
+                $novaQuantidade = $qtdItens - $qtdConsumida;
+                //echo "<br>". $novaQuantidade;
+                //var_dump($novaQuantidade);die;
+                // Atualiza a tabela tb_estoque
+                Yii::$app->db->createCommand()
+                ->update('tb_estoque', ['qtd_itens' => $novaQuantidade], ['id_estoque' => $model->id_estoque])
+                ->execute();
+                if ($model->save()) {
+                    // Crie um flash message de Sucesso
+                    Yii::$app->session->setFlash('success', 'Consumo gravado com sucesso.');
+                    return $this->redirect(['tb-cliente/consumo-historico', 'cpf_cnpj' => $model->id_cliente_cpf_cnpj]);
+                }
+
+            }else{
+                //throw new \yii\base\Exception('Não há saldo disponível.'); // Lança uma exceção Yii2 com a mensagem de erro
+                // Crie um flash message de erro
+                Yii::$app->session->setFlash('error', 'Não há saldo disponível.');
+                //return $this->render('tb-cliente/consumo-historico', ['cpf_cnpj' => $model->id_cliente_cpf_cnpj]);
+                return $this->redirect(['tb-cliente/consumo-historico', 'cpf_cnpj' => $model->id_cliente_cpf_cnpj]);
             }
         } else {
             $model->loadDefaultValues();
@@ -154,7 +212,7 @@ class TbHistoricoConsumoController extends Controller
 
         $model = new TbHistoricoConsumo();
 
-       $hoje = date('Y-m-d');
+        $hoje = date('Y-m-d');
 
         $model->id_cliente_cpf_cnpj = $cpf_cnpj;
         $model->data_consumo = $hoje;

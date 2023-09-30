@@ -182,159 +182,7 @@ $estoqueModel = new TbEstoque();
                                 <div class="card-header">
                                     <h3 class="card-title">
                                     <i class="fas fa-edit"></i>
-                                    <h4>&nbsp3 - Histórico Consumo:</h4>
-                                    </h3>
-                                </div>
-                                <div class="col-lg-12 col-sm-12 col-xs-12 col-md-6">
-                                    <div class="container-fluid w-auto row">
-
-                                        <div class="table-responsive col-lg-12 col-xs-12 col-sm-12 col-md-6 ">
-                                            <!-- Grideview   -->
-
-
-                                            <?php //GridView::widget
-                                                (
-                                                    [
-                                                        //'dataProvider' => $provider7,
-                                                        //Filtro de pesquisa
-                                                        //'filterModel' => $searchModel,
-                                                        'pjax' => true,
-                                                        'responsive'=>true,
-
-                                                        'responsiveWrap' => false,
-                                                        'containerOptions'=>['style'=>'overflow: auto; font-size:1em;'],
-
-                                                        'resizableColumnsOptions' => [ 'resizeFromBody' => false],
-
-                                                        //Botões de exportação e de expansão da quantidade de resultados da Grideview --v
-                                                        'toolbar'=>
-                                                        [
-                                                            '{export}',
-                                                            '{toggleData}',
-                                                        ],
-
-                                                        'hover'=>true,
-
-                                                        'panel' =>
-                                                        [
-                                                            //Título do painel
-                                                            'heading'=>'&nbsp',
-
-                                                            'type'=>'primary',
-
-                                                            //Parte acima do Pagination   (Rodapé)
-                                                            'after'=>Html::a('
-                                                                <div >
-                                                                    <span >
-                                                                        <button type="button" class="glyphicon glyphicon-pencil btn btn-primary btn-sm" data-toggle="modal" data-target="#modalTrat">
-                                                                            <span style="font-family: Helvetica Neue, Helvetica, Arial, sans-serif">
-                                                                                &nbspAdicionar Tratativa
-                                                                            </span>
-                                                                        </button>
-                                                                    </span>
-                                                                </div>'
-                                                        ),
-                                                            //Parte acima do Pagination   (Rodapé)
-                                                            'footer'=>'',
-
-                                                        ],
-
-                                                        //Colunas da Gridview
-                                                        'columns' =>
-                                                        [
-                                                            //['class' => 'yii\grid\SerialColumn'],
-                                                            //Itens comentados para não exibir na grideview
-                                                            /*[
-                                                                'attribute' => 'id',
-                                                                'header' => 'ID',
-                                                                'headerOptions' => [
-                                                                    'style' => 'text-align: center; width: 4%;'
-                                                                ],
-                                                                'contentOptions' => [
-                                                                    'style' => 'text-align: center;'
-                                                                ]
-                                                            ],
-                                                            [
-                                                                'attribute' => 'nr_chamado',
-                                                                'header' => 'Chamado',
-                                                                'headerOptions' => [
-                                                                    'style' => 'text-align: center; width: 9%;'
-                                                                ],
-                                                                'contentOptions' => [
-                                                                    'style' => 'text-align: center;'
-                                                                ]
-                                                            ],*/
-                                                            [
-                                                                //Coluna da tabela no banco de dados
-                                                                'attribute' => 'dt_criacao',
-                                                                //Título para exibição da coluna
-                                                                'header' => 'Data / Hora',
-                                                                //Configuração/Estilo do título da coluna
-                                                                'headerOptions' => [
-                                                                    'style' => 'text-align: center; width: 15%;'
-                                                                ],
-                                                                //Configuração/Estilo dos dados a serem exibidos na coluna
-                                                                'contentOptions' => [
-                                                                    'style' => 'text-align: center;'
-                                                                ]
-                                                            ],
-                                                            [
-                                                                'attribute' => 'user',
-                                                                'header' => 'Usuário',
-                                                                'headerOptions' => [
-                                                                    'style' => 'text-align: center; width: 15%;'
-                                                                ],
-                                                                'contentOptions' => [
-                                                                    'style' => 'text-align: center;'
-                                                                ]
-                                                            ],
-                                                            [
-                                                                'attribute' => 'obs',
-                                                                'header' => 'Tratativa',
-                                                                'headerOptions' => [
-                                                                    'style' => 'text-align: center;'
-                                                                ],
-                                                                'contentOptions' => [
-                                                                    'style' => 'text-align: left;'
-                                                                ]
-                                                            ],
-                                                            //'id',
-                                                            //'nr_chamado',
-                                                            //'dt_criacao',
-                                                            //'idDependencia',
-                                                            //'codigoReferenciaOrigem',
-                                                            //'user',
-                                                            //'obs',
-
-                                                            // ['class' => 'yii\grid\ActionColumn'],
-
-
-                                                        ],
-                                                    ]
-                                                );
-
-                                            ?>
-
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card card-primary card-outline">
-                                <div class="card-header">
-                                    <h3 class="card-title">
-                                    <i class="fas fa-edit"></i>
-                                    <h4>&nbsp1 - Produto:</h4>
+                                    <h4>&nbsp3 - Produto:</h4>
                                     </h3>
                                 </div>
                                 <div class="col-lg-12 col-sm-12 col-xs-12 col-md-6">
@@ -488,7 +336,7 @@ $estoqueModel = new TbEstoque();
                                 <div class="card-header">
                                     <h3 class="card-title">
                                     <i class="fas fa-edit"></i>
-                                    <h4>&nbsp2 - Saldo Estoque:  </h4>
+                                    <h4>&nbsp4 - Saldo Estoque:  </h4>
                                     </h3>
                                 </div>
                                 <div class="col-lg-12 col-sm-12 col-xs-12 col-md-6">
@@ -516,20 +364,22 @@ $estoqueModel = new TbEstoque();
                                 <div class="card-header">
                                     <h3 class="card-title">
                                     <i class="fas fa-edit"></i>
-                                    <h4>&nbsp3 - Inserir consumo:  </h4>
+                                    <h4>&nbsp5 - Inserir consumo:  </h4>
                                     </h3>
                                 </div>
                                 <div class="col-lg-12 col-sm-12 col-xs-12 col-md-6">
                                     <div class="container-fluid w-auto row">
-                                            <?= $form->field($model, 'id_estoque')->textInput(['readonly'=> true]) ?>
-                                            <?= $form->field($model, 'id_num_produto')->textInput(['readonly'=> true]) ?>
+                                        <div hidden>
+                                            <?= $form->field($model, 'id_estoque')->hiddenInput(['readonly'=> true]) ?>
+                                            <?= $form->field($model, 'id_num_produto')->hiddenInput(['readonly'=> true]) ?>
                                             <?= $form->field($model, 'id_cliente_cpf_cnpj')->widget(MaskedInput::class, [
                                                 'mask' => ['999.999.999-99', '99.999.999/9999-99'], // Define as máscaras para CPF e CNPJ
                                                 'options' => ['maxlength' => true],
                                                 'clientOptions' => [
                                                     'removeMaskOnSubmit' => true, // Remove a máscara antes de enviar o formulário
                                                 ],
-                                            ])->textInput(['maxlength' => true, 'readonly' => true]) ?>
+                                            ])->hiddenInput(['maxlength' => true, 'readonly' => true]) ?>
+                                        </div>
                                         <div class="col-lg-6 col-sm-12 col-xs-12 col-md-6">
                                             <?= $form->field($model, 'qtd_consumida')->textInput() ?>
                                         </div>
@@ -537,7 +387,11 @@ $estoqueModel = new TbEstoque();
                                             <?= $form->field($model, 'data_consumo')->textInput(['type' => 'date']) ?>
                                         </div>
                                     </div>
-
+                                    <div class="container-fluid w-auto row">
+                                        <div class="form-group">
+                                            <?= Html::submitButton(Yii::t('app', 'Inserir Consumo'), ['class' => 'btn btn-success']) ?>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -556,11 +410,6 @@ $estoqueModel = new TbEstoque();
 
              <?php //$form->field($model, 'id_num_produto')->textInput() ?>
 
-
-
-            <div class="form-group">
-                <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
-            </div>
 
 
         <?php ActiveForm::end(); ?>

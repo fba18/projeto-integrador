@@ -232,15 +232,17 @@ $estoqueModel = new TbEstoque();
                                 </div>
                                 <div class="col-lg-12 col-sm-12 col-xs-12 col-md-6">
                                     <div class="container-fluid w-auto row">
-                                            <?= $form->field($model, 'id_estoque')->textInput(['readonly'=> true]) ?>
-                                            <?= $form->field($model, 'id_num_produto')->textInput(['readonly'=> true]) ?>
+                                        <div hidden>
+                                            <?= $form->field($model, 'id_estoque')->hiddenInput(['readonly'=> true]) ?>
+                                            <?= $form->field($model, 'id_num_produto')->hiddenInput(['readonly'=> true]) ?>
                                             <?= $form->field($model, 'id_cliente_cpf_cnpj')->widget(MaskedInput::class, [
                                                 'mask' => ['999.999.999-99', '99.999.999/9999-99'], // Define as máscaras para CPF e CNPJ
                                                 'options' => ['maxlength' => true],
                                                 'clientOptions' => [
                                                     'removeMaskOnSubmit' => true, // Remove a máscara antes de enviar o formulário
                                                 ],
-                                            ])->textInput(['maxlength' => true, 'readonly' => true]) ?>
+                                            ])->hiddenInput(['maxlength' => true, 'readonly' => true]) ?>
+                                        </div>
                                         <div class="col-lg-6 col-sm-12 col-xs-12 col-md-6">
                                             <?= $form->field($model, 'qtd_consumida')->textInput() ?>
                                         </div>

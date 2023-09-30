@@ -2,18 +2,18 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use app\models\TbHistoricoConsumo;
+use app\models\TbCliente;
 use kartik\select2\Select2;
 use yii\widgets\MaskedInput;
 
 /** @var yii\web\View $this */
-/** @var app\models\TbHistoricoConsumoSearch $model */
+/** @var app\models\TbClienteSearch $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="tb-historico-consumo-search">
+<div class="tb-cliente-search">
 
-<?php $form = ActiveForm::begin([
+    <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
@@ -45,10 +45,11 @@ use yii\widgets\MaskedInput;
                                     <div class="col-lg-4 col-sm-12 col-xs-12 col-md-6">
                                         <?= $form->field($model, 'nome')->label("Nome Cliente") ?>
                                     </div>
+
                                 </div>
                                 <div class="container-fluid w-auto row form-group">
                                     <div class="col-lg-4 col-sm-12 col-xs-12 col-md-6 btn-sm">
-                                        <?= Html::a('Cadastrar Consumo', ['create'], ['class' => 'btn btn-success btn-sm']) ?>
+                                        <?php //Html::a('Cadastrar Cliente', ['create'], ['class' => 'btn btn-success btn-sm']) ?>
                                         <?= Html::submitButton(Yii::t('app', '<i class="bi bi-search"></i> Pesquisar'), ['class' => 'btn btn-primary btn-sm']) ?>
                                         <?= Html::a('<i class="fa fa-sync fa-spin" style="animation-iteration-count: 1;animation-duration: 0.3s"></i> Limpar Filtros', ['index'], ['class' => 'btn btn-success btn-sm'])  ?>
                                     </div>

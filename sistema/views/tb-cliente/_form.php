@@ -74,20 +74,20 @@ $this->registerJs($js, View::POS_READY);
                                                 'clientOptions' => [
                                                     'removeMaskOnSubmit' => true, // Remove a máscara antes de enviar o formulário
                                                 ],
-                                            ])->textInput(['maxlength' => true]) ?>
+                                            ])->textInput(['maxlength' => true])->label("CPF / CNPJ") ?>
                                            <span id="cpf-cnpj-validation-message" style="color: red;"></span>
 
                                         </div>
                                         <div class="col-lg-6 col-sm-12 col-xs-12 col-md-6">
-                                            <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
+                                            <?= $form->field($model, 'nome')->textInput(['maxlength' => true])->label("Nome Cliente") ?>
                                         </div>
                                         <div class="col-lg-3 col-sm-12 col-xs-12 col-md-6">
-                                        <?= $form->field($model, 'data_nascimento')->textInput(['type' => 'date']) ?>
+                                        <?= $form->field($model, 'data_nascimento')->textInput(['type' => 'date'])->label("Data de Nascimento") ?>
                                         </div>
                                     </div>
                                     <div class="container-fluid w-auto row">
                                         <div class="col-lg-6 col-sm-12 col-xs-12 col-md-6">
-                                            <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+                                            <?= $form->field($model, 'email')->textInput(['maxlength' => true])->label("E-mail") ?>
                                         </div>
                                         <div class="col-lg-3 col-sm-12 col-xs-12 col-md-6">
                                             <?php // $form->field($model, 'telefone')->textInput(['maxlength' => true]) ?>
@@ -97,7 +97,7 @@ $this->registerJs($js, View::POS_READY);
                                                 'clientOptions' => [
                                                     'removeMaskOnSubmit' => true,
                                                 ],
-                                            ])->textInput(['maxlength' => true]) ?>
+                                            ])->textInput(['maxlength' => true])->label("Telefone") ?>
                                         </div>
                                     </div>
 
@@ -130,27 +130,27 @@ $this->registerJs($js, View::POS_READY);
                                                 'clientOptions' => [
                                                     'removeMaskOnSubmit' => true,
                                                 ],
-                                            ])->textInput(['maxlength' => true]) ?>
+                                            ])->textInput(['maxlength' => true])->label("CEP") ?>
                                         </div>
                                         <div class="col-lg-5 col-sm-12 col-xs-12 col-md-6">
-                                            <?= $form->field($model, 'rua')->textInput(['maxlength' => true]) ?>
+                                            <?= $form->field($model, 'rua')->textInput(['maxlength' => true])->label("Rua / Av") ?>
                                         </div>
                                         <div class="col-lg-1 col-sm-12 col-xs-12 col-md-6">
                                             <?= $form->field($model, 'numero')->textInput(['maxlength' => true]) ?>
                                         </div>
                                         <div class="col-lg-4 col-sm-12 col-xs-12 col-md-6">
-                                            <?= $form->field($model, 'complemento')->textInput(['maxlength' => true]) ?>
+                                            <?= $form->field($model, 'complemento')->textInput(['maxlength' => true])->label("Complemento") ?>
                                         </div>
                                     </div>
                                     <div class="container-fluid w-auto row">
                                         <div class="col-lg-3 col-sm-12 col-xs-12 col-md-6">
-                                            <?= $form->field($model, 'bairro')->textInput(['maxlength' => true]) ?>
+                                            <?= $form->field($model, 'bairro')->textInput(['maxlength' => true])->label("Bairro") ?>
                                         </div>
                                         <div class="col-lg-3 col-sm-12 col-xs-12 col-md-6">
-                                            <?= $form->field($model, 'cidade')->textInput(['maxlength' => true]) ?>
+                                            <?= $form->field($model, 'cidade')->textInput(['maxlength' => true])->label("Cidade") ?>
                                         </div>
                                         <div class="col-lg-1 col-sm-12 col-xs-12 col-md-6">
-                                            <?= $form->field($model, 'uf')->textInput(['maxlength' => true]) ?>
+                                            <?= $form->field($model, 'uf')->textInput(['maxlength' => true])->label("UF") ?>
                                         </div>
                                     </div>
                                     <div class="container-fluid w-auto row">

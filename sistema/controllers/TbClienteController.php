@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\TbCliente;
 use app\models\TbClienteSearch;
+use app\models\TbClienteConsumoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -56,6 +57,7 @@ class TbClienteController extends Controller
     public function actionIndexConsumo()
     {
         $searchModel = new TbClienteSearch();
+        //$searchModel = new TbClienteConsumoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index-consumo', [

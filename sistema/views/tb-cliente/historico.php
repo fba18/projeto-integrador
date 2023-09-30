@@ -28,6 +28,8 @@ $produtoModel = new TbProduto();
 $estoqueModel = new TbEstoque();
 $historicoConsumoModel = new TbHistoricoConsumo();
 
+$this->title = Yii::t('app', 'Inserir consumo para o cliente: '). $model->nome;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Voltar'), 'url' => 'javascript:history.go(-1)'];
 
 /** @var yii\web\View $this */
 /** @var app\models\TbHistoricoConsumo $model */
@@ -369,7 +371,7 @@ $historicoConsumoModel = new TbHistoricoConsumo();
 
                                                             ]
                                                         ],
-                                                        [
+                                                        /*[
                                                             'attribute' => 'qtd_itens',
                                                             'header' => 'Quantidade disponível',
                                                             'headerOptions' => [
@@ -380,7 +382,7 @@ $historicoConsumoModel = new TbHistoricoConsumo();
                                                                 'style' => 'text-align: center;'
 
                                                             ]
-                                                            ],
+                                                        ],*/
 
                                                         //'qtd_consumida',
                                                         [

@@ -4,17 +4,15 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\TbHistoricoConsumo;
+use app\models\TbCliente;
 use yii\db\Query;
 
 /**
  * TbClienteSearch represents the model behind the search form of `app\models\TbCliente`.
  */
-class TbHistoricoConsumoSearch extends TbHistoricoConsumo
+class TbClienteConsumoSearch extends TbCliente
 {
     public $id_consumo;
-    public $cpf_cnpj;
-    public $nome;
     public $num_produto;
     public $nome_produto;
     public $estado_produto;
@@ -55,6 +53,24 @@ class TbHistoricoConsumoSearch extends TbHistoricoConsumo
      */
     public function search($params)
     {
+        /*$query = TbCliente::find()
+        ->select([
+            'tb_historico_consumo.id_consumo',
+            'tb_cliente.cpf_cnpj',
+            'tb_cliente.nome',
+            'tb_produto.num_produto',
+            'tb_produto.nome_produto',
+            'tb_produto.estado_produto',
+            'tb_produto.preco_produto',
+            'tb_estoque.id_estoque',
+            'tb_estoque.qtd_itens',
+            'tb_estoque.endereco_item',
+            'tb_historico_consumo.qtd_consumida',
+            'tb_historico_consumo.data_consumo',
+        ])
+        ->leftJoin('tb_historico_consumo', 'tb_historico_consumo.id_cliente_cpf_cnpj = tb_cliente.cpf_cnpj')
+        ->leftJoin('tb_estoque', 'tb_estoque.id_estoque = tb_historico_consumo.id_estoque')
+        ->leftJoin('tb_produto', 'tb_produto.num_produto = tb_estoque.num_produto');*/
 
         $query = (new Query())
         ->select([
