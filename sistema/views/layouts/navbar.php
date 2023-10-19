@@ -22,13 +22,11 @@ $this->registerJsFile($publishedRes[1].'/control_sidebar.js', ['depends' => '\ha
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
-
-
 <?php
                 if (Yii::$app->user->isGuest&&Yii::$app->user->identity->superadmin==0) {
 
                     echo ' <!-- Navbar -->
-                    <nav class="main-header navbar navbar-expand navbar-white navbar-light;" style="background-color:#348cb3;">
+                    <nav class="main-header navbar navbar-expand navbar-white navbar-light;" style="background-color:#225f78;">
                         <!-- Left navbar links -->
                         <ul class="navbar-nav"><br><br></ul>
 
@@ -103,13 +101,13 @@ $this->registerJsFile($publishedRes[1].'/control_sidebar.js', ['depends' => '\ha
                         echo '
 
                             <!-- Navbar -->
-                                <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color:#0879A6;">
+                                <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color:#225f78;">
 
                                     <!-- Left navbar links -->
                                     <ul class="navbar-nav">
 
                                         <li class="nav-item">
-                                            <a class="nav-link" data-widget="pushmenu" href="#" role="button" style="color:#FFFFFF"><i class="fas fa-bars"></i></a>
+                                            <a class="nav-link chamar-javascritp" data-widget="pushmenu" href="#" role="button" style="color:#FFFFFF"><i class="fas fa-bars"></i></a>
                                         </li>
                                         <li class="nav-item d-none d-sm-inline-block">
                                             <a href="'.\yii\helpers\Url::home().'" class="nav-link" style="color:#FFFFFF">Home</a>

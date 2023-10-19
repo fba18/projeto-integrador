@@ -5,17 +5,61 @@ use yii\helpers\Html;
 
 
 ?>
+<style>
+    /* Estiliza a imagem */
+    img.borda {
+        background-color: #f2bd41;
+        /*padding: 0px;
+        filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));*/
+        width: 50px;
+        height: 50px;
+    }
+    .quebra-linha {
+    max-width: 200px;
+    word-wrap: break-word; /* Para quebrar palavras longas */
+    white-space: normal; /* Para quebrar palavras em espaços em branco */
+    max-height: 200px; /* Opcional: define a altura máxima */
+    }
 
-<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#0879A6;">
+
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const brandLink = document.querySelector('.brand-link.quebra-linha');
+        const pushmenuButton = document.querySelector('.nav-link.chamar-javascritp');
+        const logoImage = document.querySelector('.borda');
+
+        pushmenuButton.addEventListener('click', function () {
+            const body = document.body;
+
+            if (body.classList.contains('sidebar-collapse')) {
+                brandLink.removeAttribute('hidden');
+                logoImage.style.marginLeft = '90px'; // Configuração original
+                logoImage.style.marginRight = '12px';
+            } else {
+                brandLink.setAttribute('hidden', 'true');
+                logoImage.style.marginLeft = '3px';
+                logoImage.style.marginRight = '12px';
+
+            }
+        });
+    });
+</script>
+<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#225f78;">
     <!-- Brand Logo -->
     <a href="#" class="brand-link" style='font-family:calibri; color:#ffffff;'>
 
-        <img src="/uploads/imagens/logo.png" alt="Alterar em views/layouts/sidebar.php" style="margin-left:5px;margin-right:12px" width='50px' >
-        <b style='font-size:20px;'>
-            SGDTE
-        </b>
+        <img class="borda" src="/uploads/imagens/logo.png" alt="EIG - Engenharia, informática e gerenciamento" style="margin-left:3px;margin-right:12px; "  >
+        <!--b style='font-size:15px; '>
+        Eng. Info. e Gerenciamento
+        </b-->
 
     </a>
+    <div style="margin-left:10%;width: 100%; text-align: center;">
+        <a hidden href="#" class="brand-link quebra-linha"  style='font-family:calibri; color:#ffffff;'>
+            <b  style='font-size:15px; '>Engenharia, Informática e Gerenciamento</b>
+        </a>
+    </div>
 
 
     <!-- Sidebar -->

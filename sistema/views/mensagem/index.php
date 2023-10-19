@@ -51,10 +51,10 @@ echo "<meta HTTP-EQUIV='refresh' CONTENT='300'>";
                     </ol>
                     <div class="carousel-inner">
                       <div class="carousel-item active">
-                        <img class="d-block w-100" src="/uploads/imagens/1001-inicial.jfif" style="min-width:100%;max-width:90%;min-height:400px; max-height:500px; text-align:center; " alt="Estou em views/mensagem/index.php">
+                        <img class="d-block w-100" src="/uploads/imagens/eig-inicial.jfif" style="min-width:100%;max-width:90%;min-height:400px; max-height:500px; text-align:center; " alt="Estou em views/mensagem/index.php">
                       </div>
                       <div class="carousel-item">
-                        <img class="d-block w-100" src="/uploads/imagens/1001-dados-contato.png" style="min-width:100%;max-width:90%;min-height:400px; max-height:500px; text-align:center; " alt="Estou em views/mensagem/index.php">
+                        <img class="d-block w-100" src="/uploads/imagens/eig-dados-contato.png" style="min-width:100%;max-width:90%;min-height:400px; max-height:500px; text-align:center; " alt="Estou em views/mensagem/index.php">
                       </div>
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
