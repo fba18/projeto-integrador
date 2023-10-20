@@ -42,7 +42,7 @@ $config = [
 
         'assetManager' => [
             'class' => 'yii\web\AssetManager',
-            //'linkAssets' => true,
+            'linkAssets' => true,
             'bundles' => [
                 'kartik\daterange\DateRangePickerAsset' => [
                     'depends' => [
