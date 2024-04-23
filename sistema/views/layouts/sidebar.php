@@ -55,7 +55,7 @@ use yii\helpers\Html;
         </b-->
 
     </a>
-    <div style="margin-left:10%;width: 100%; text-align: center;">
+    <div style="margin-left:10%;width: 90%; text-align: center;">
         <a hidden href="#" class="brand-link quebra-linha"  style='font-family:calibri; color:#ffffff;'>
             <b  style='font-size:15px; '>Engenharia, Informática e Gerenciamento</b>
         </a>
@@ -179,7 +179,7 @@ use yii\helpers\Html;
 
                             [
                                 'label' => 'Clientes',
-                                'icon' => 'bi bi-globe',
+                                'icon' => 'bi bi-people-fill',
                                 'items' =>
                                 [
                                     ['label' => 'Clientes', 'icon' => 'bi bi-key', 'url' => ['/tb-cliente/index']],
@@ -204,6 +204,17 @@ use yii\helpers\Html;
                                     ['label' => 'Inserir Consumo', 'icon' => 'bi bi-box2', 'url' => ['/tb-cliente/index-consumo']],
                                     ['label' => 'Histórico Consumo', 'icon' => 'bi bi-box2', 'url' => ['/tb-historico-consumo/index']],
                                 ],
+                            ],
+
+                            [
+                                'label' => 'Dashboards',
+                                'icon' => 'bi bi-file-bar-graph',
+                                'url' => ['/tb-historico-consumo/dashboard']
+                                /*'items' =>
+                                [
+                                    ['label' => 'Inserir Consumo', 'icon' => '"bi bi-file-earmark-bar-graph', 'url' => ['/tb-cliente/index-consumo']],
+                                    ['label' => 'Histórico Consumo', 'icon' => '"bi bi-file-earmark-bar-graph', 'url' => ['/tb-historico-consumo/index']],
+                                ],*/
                             ],
 
 

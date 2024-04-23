@@ -81,6 +81,10 @@ class TbProduto extends \yii\db\ActiveRecord
         public static function getProdutos()
         {
             $produtos = self::find()->all();
+            /*$produtos = self::find()
+            ->joinWith('estoque')
+            ->where(['>=', 'tb_estoque.qtd_itens', 1])
+            ->all();*/
             $data = [];
             foreach ($produtos as $produto) {
                 $data[$produto->num_produto] = $produto->num_produto;
@@ -95,12 +99,17 @@ class TbProduto extends \yii\db\ActiveRecord
         public static function getProdutosNome()
         {
             $produtos = self::find()->all();
+            /*$produtos = self::find()
+            ->joinWith('estoque')
+            ->where(['>=', 'tb_estoque.qtd_itens', 1])
+            ->all();*/
             $data = [];
             foreach ($produtos as $produto) {
                 $data[$produto->nome_produto] = $produto->nome_produto;
             }
             return $data;
         }
+
 
     //Para o select2
         public static function getProdutosEstadoProd()
@@ -246,4 +255,10 @@ class TbProduto extends \yii\db\ActiveRecord
             }
     }
 
+
+    // Relacionamento com a tabela de estoque
+    public function getEstoque()
+    {
+        return $this->hasOne(TbEstoque::className(), ['num_produto' => 'num_produto']);
+    }
 }

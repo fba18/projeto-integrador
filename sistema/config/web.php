@@ -90,10 +90,23 @@ $config = [
             'errorAction' => 'site/error',
         ],
         'mailer' => [
-            'class' => \yii\symfonymailer\Mailer::class,
-            'viewPath' => '@app/mail',
+            //'class' => \yii\symfonymailer\Mailer::class,
+            'class' => \yii\swiftmailer\Mailer::class,
+            //'viewPath' => '@app/mail',
             // send all mails to a file by default.
-            'useFileTransport' => true,
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp-mail.outlook.com', // Configure com as suas configurações de SMTP
+                'port' => 587,
+                'encryption' => 'tls',
+                'username' => 'teste@teste.com',
+                'password' => 'Teste@123',
+            ],
+            'messageConfig' => [
+                'from' => ['teste@teste.com' => 'Projeto Integrador III - UNIVESP'],
+                'replyTo' => 'teste@teste.com',
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

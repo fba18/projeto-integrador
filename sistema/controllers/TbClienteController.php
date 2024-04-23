@@ -212,7 +212,8 @@ class TbClienteController extends Controller
             ->innerJoin(['p' => 'tb_produto'], 'e.num_produto = p.num_produto')
             ->innerJoin(['c' => 'tb_cliente'], 'hc.id_cliente_cpf_cnpj = c.cpf_cnpj')
             ->where(['hc.id_cliente_cpf_cnpj' => $cpf_cnpj])
-            ->orderBy(['hc.data_consumo' => SORT_ASC]); // Ordenar por data_consumo em ordem crescente
+            //->orderBy(['hc.data_consumo' => SORT_ASC]); // Ordenar por data_consumo em ordem crescente
+            ->orderBy(['hc.data_consumo' => SORT_DESC]); // Ordenar por data_consumo em ordem decrescente
 
         // Crie um ActiveDataProvider com a consulta personalizada
         /*$dataProvider = new ActiveDataProvider([

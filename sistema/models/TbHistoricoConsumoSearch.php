@@ -75,7 +75,8 @@ class TbHistoricoConsumoSearch extends TbHistoricoConsumo
         ->innerJoin(['e' => 'tb_estoque'], 'hc.id_estoque = e.id_estoque')
         ->innerJoin(['p' => 'tb_produto'], 'e.num_produto = p.num_produto')
         ->innerJoin(['c' => 'tb_cliente'], 'hc.id_cliente_cpf_cnpj = c.cpf_cnpj')
-        ->orderBy(['hc.data_consumo' => SORT_ASC]); // Ordenar por data_consumo em ordem crescente
+        //->orderBy(['hc.data_consumo' => SORT_ASC]); // Ordenar por data_consumo em ordem crescente
+        ->orderBy(['hc.id_consumo' => SORT_DESC]); // Ordenar por id_consumo em ordem decrescente
 
 
         // add conditions that should always apply here

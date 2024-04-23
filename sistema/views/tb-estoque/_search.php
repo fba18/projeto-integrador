@@ -9,7 +9,7 @@ use kartik\select2\Select2;
 /** @var app\models\TbEstoqueSearch $model */
 /** @var yii\widgets\ActiveForm $form */
 
-$model = new TbEstoque();
+//$model = new TbEstoque();
 ?>
 
 <div class="tb-estoque-search">

@@ -40,7 +40,17 @@ class TbEstoqueSearch extends TbEstoque
      */
     public function search($params)
     {
-        $query = TbEstoque::find();
+        $query = TbEstoque::find()->joinWith('produto');
+
+        $nome_produto = $params["TbEstoqueSearch"]["nome_produto"];
+
+        // Adicione os campos que deseja ordenar
+        $query->select([
+            'tb_estoque.*', // Seleciona todos os campos da tabela de estoque
+            'tb_produto.nome_produto',
+            'tb_produto.estado_produto',
+            'tb_produto.preco_produto'
+        ]);
 
         // add conditions that should always apply here
 
@@ -59,11 +69,12 @@ class TbEstoqueSearch extends TbEstoque
         // grid filtering conditions
         $query->andFilterWhere([
             'id_estoque' => $this->id_estoque,
-            'num_produto' => $this->num_produto,
+            'tb_estoque.num_produto' => $this->num_produto,
             'qtd_itens' => $this->qtd_itens,
         ]);
 
         $query->andFilterWhere(['like', 'endereco_item', $this->endereco_item]);
+        $query->andFilterWhere(['like', 'tb_produto.nome_produto', $nome_produto]);
 
         return $dataProvider;
     }

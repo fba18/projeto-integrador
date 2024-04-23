@@ -45,11 +45,8 @@ class TbEstoqueController extends Controller
     public function actionIndex()
     {
         $searchModel = new TbEstoqueSearch();
-        /*$dataProvider = $searchModel->search($this->request->queryParams);
 
-        */
-
-        $dataProvider = new \yii\data\ActiveDataProvider([
+        /*$dataProvider = new \yii\data\ActiveDataProvider([
             'query' => TbEstoque::find()
                 ->select(['tb_estoque.*', 'tb_produto.nome_produto', 'tb_produto.estado_produto', 'tb_produto.preco_produto'])
                 ->leftJoin('tb_produto', 'tb_estoque.num_produto = tb_produto.num_produto'),
@@ -68,7 +65,9 @@ class TbEstoqueController extends Controller
             'pagination' => [
                 'pageSize' => 20,
             ],
-        ]);
+        ]);*/
+
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -121,6 +120,7 @@ class TbEstoqueController extends Controller
      */
     public function actionUpdate($id_estoque)
     {
+
         $model = $this->findModel($id_estoque);
 
 
@@ -134,9 +134,12 @@ class TbEstoqueController extends Controller
 
         $produtoModel = TbProduto::findOne($model->num_produto);
 
+
+
     if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        //echo $model->id_estoque;die;
         Yii::$app->session->setFlash('error', 'Dados atualizados com sucesso!');
-        return $this->redirect(['update', 'id' => $model->id_estoque]);
+        return $this->redirect(['update', 'id_estoque' => $model->id_estoque]);
         //return $this->redirect(['index']);
     }
 
