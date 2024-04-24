@@ -100,7 +100,7 @@ $config = [
                 'host' => 'smtp-mail.outlook.com', // Configure com as suas configurações de SMTP
                 'port' => 587,
                 'encryption' => 'tls',
-                'username' => 'teste@teste.com',
+                'username' => 'teste@teste.com1',
                 'password' => 'Teste@123',
             ],
             'messageConfig' => [
