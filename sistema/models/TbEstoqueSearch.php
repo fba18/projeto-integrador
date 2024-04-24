@@ -42,7 +42,8 @@ class TbEstoqueSearch extends TbEstoque
     {
         $query = TbEstoque::find()->joinWith('produto');
 
-        $nome_produto = $params["TbEstoqueSearch"]["nome_produto"];
+        //$nome_produto = $params["TbEstoqueSearch"]["nome_produto"];
+        $nome_produto = isset($params["TbEstoqueSearch"]["nome_produto"]) ? $params["TbEstoqueSearch"]["nome_produto"] : null;
 
         // Adicione os campos que deseja ordenar
         $query->select([
