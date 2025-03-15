@@ -19,8 +19,18 @@ use kartik\editable\Editable;
 
 $this->title = 'Estoque';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="tb-estoque-index">
+
+    <div id="message" class='col-lg-12 alertflipper ' > <?php if (Yii::$app->session->hasFlash('error')): ?>
+ 		 <div class="alert alert-success alert-dismissable col-lg-4" style="position:absolute;top:180px;left:150px;z-index:1000000;">
+  		<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+  		<h3><i class="icon fa fa-check"></i>Atenção!</h3>
+  		<?= Yii::$app->session->getFlash('error') ?>
+ 		 </div>
+	 <?php endif; ?>
+    </div>
 
     <!--h1><?= Html::encode($this->title) ?></h1-->
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -65,14 +75,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         //'id_estoque',
                         'num_produto',
-                        'qtd_itens',
-                        'endereco_item',
-
-
                         'nome_produto' => [
                             'attribute' => 'nome_produto',
                             'enableSorting' => true,
                         ],
+                        'qtd_itens',
+                        'endereco_item',
+                        'nome_deposito' => [
+                            'label' => 'Local Depósito',
+                            'attribute' => 'nome_deposito',
+                            'enableSorting' => true,
+                        ],
+
                         'estado_produto' => [
                             'attribute' => 'estado_produto',
                             'enableSorting' => true,
@@ -100,13 +114,24 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],*/
                         [
 
-                            'label' => 'Ações',
+                            'label' => 'Editar',
                             'format' => 'raw',
                             'attribute'=>'acoes',
 
                             // here comes the problem - instead of parent_region I need to have parent
                             'value' => function ($dataProvider) {
-                                return Html::a('<i class="bi bi-pencil"></i> Tratar',  Url::to("/tb-estoque/update?id_estoque=".$dataProvider['id_estoque'], true), ['class' => 'btn btn-danger btn-sm', 'role' => 'modal-remote','target'=>'_blank']);
+                                return Html::a('<i class="bi bi-pencil"></i>',  Url::to("/tb-estoque/update?id_estoque=".$dataProvider['id_estoque'], true), ['class' => 'btn btn-outline-danger btn-sm', 'role' => 'modal-remote','target'=>'_blank']);
+                            }
+                        ],
+                        [
+
+                            'label' => 'Transferir',
+                            'format' => 'raw',
+                            'attribute'=>'acoes',
+
+                            // here comes the problem - instead of parent_region I need to have parent
+                            'value' => function ($dataProvider) {
+                                return Html::a('<i class="bi bi-arrow-left-right"></i> <i class="bi bi-truck"></i>',  Url::to("/tb-estoque/transferir-estoque?id_estoque=".$dataProvider['id_estoque'], true), ['class' => 'btn btn-outline-primary btn-sm', 'role' => 'modal-remote','target'=>'_blank']);
                             }
                         ],
                     ],

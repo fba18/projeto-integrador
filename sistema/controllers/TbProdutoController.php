@@ -142,4 +142,78 @@ class TbProdutoController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+    //Base Teste
+        //Passo 1 - Gerar produtos iniciais
+            public function actionGerarProdutos()
+            {
+                $nomesBase = [
+                    'Chapa de Aço', 'Tubo de Alumínio', 'Ferro Fundido', 'Cobre Laminado', 'Liga de Zinco',
+                    'Parafuso Inoxidável', 'Porca de Latão', 'Corrente de Aço', 'Viga Metálica', 'Tela de Arame',
+                    'Fita de Aço', 'Eixo de Ferro', 'Chapa Galvanizada', 'Mola de Aço', 'Placa de Alumínio',
+                    'Ferro Angular', 'Cilindro de Cobre', 'Disco de Zinco', 'Barra de Aço', 'Suporte de Ferro',
+                    'Conector Metálico', 'Gancho de Aço', 'Parafuso Galvanizado', 'Abraçadeira Metálica', 'Prego de Aço',
+                    'Arruela de Latão', 'Tubo Galvanizado', 'Grampo de Alumínio', 'Ferro Chato', 'Chave Metálica',
+                    'Trilho de Aço', 'Perfil de Alumínio', 'Grade de Ferro', 'Protetor de Aço', 'Abraçadeira de Zinco',
+                    'Braçadeira de Ferro', 'Anel de Alumínio', 'Lâmina de Aço', 'Tampa Metálica', 'Base de Ferro',
+                    'Prendedor de Aço', 'Cabo de Alumínio', 'Ferro Maleável', 'Chassi Metálico', 'Estribo de Aço',
+                    'Painel de Alumínio', 'Grampo de Zinco', 'Ferro Dúctil', 'Espelho Metálico', 'Fixador de Aço'
+                ];
+
+                $produtos = [];
+                $numerosGerados = [];
+
+                for ($i = 0; $i < 50; $i++) {
+                    $nomeProduto = $nomesBase[array_rand($nomesBase)]; // Sem o número no final
+                    $precoProduto = number_format(mt_rand(1, 134599) / 100, 2, '.', '');
+                    $estadoProduto = (rand(0, 1) === 1) ? 'Novo' : 'Usado';
+                    $numProduto = $this->gerarNumeroUnico(7, $numerosGerados);
+
+                    $produtos[] = [
+                        'num_produto' => $numProduto,
+                        'nome_produto' => $nomeProduto,
+                        'estado_produto' => $estadoProduto,
+                        'preco_produto' => $precoProduto
+                    ];
+                }
+
+                $connection = Yii::$app->db;
+                $transaction = $connection->beginTransaction();
+
+                try {
+                    foreach ($produtos as $produto) {
+
+                        $connection->createCommand()->insert('tb_produto', [
+                            'num_produto' => $produto['num_produto'],
+                            'nome_produto' => $produto['nome_produto'],
+                            'estado_produto' => $produto['estado_produto'],
+                            'preco_produto' => $produto['preco_produto'],
+                        ])->execute();
+
+                    }
+
+                    $transaction->commit();
+                    return 'Produtos inseridos com sucesso!';
+                } catch (\Exception $e) {
+                    $transaction->rollBack();
+                    Yii::error('Erro ao inserir produtos: ' . $e->getMessage(), __METHOD__);
+                    return $e->getMessage(); //'Erro ao inserir estoque!';
+                }
+            }
+
+            private function gerarNumeroUnico($tamanho = 7, &$numerosGerados = [])
+            {
+                $min = (int) str_pad('1', $tamanho, '0'); // Exemplo: 1000000
+                $max = (int) str_pad('9', $tamanho, '9'); // Exemplo: 9999999
+
+                do {
+                    $numero = rand($min, $max);
+                } while (in_array($numero, $numerosGerados));
+
+                $numerosGerados[] = $numero;
+
+                return $numero;
+            }
+        //
+    //Fim base teste
+
 }

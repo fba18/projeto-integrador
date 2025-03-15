@@ -17,8 +17,8 @@ class TbEstoqueSearch extends TbEstoque
     public function rules()
     {
         return [
-            [['id_estoque', 'num_produto', 'qtd_itens'], 'integer'],
-            [['endereco_item'], 'safe'],
+            [['id_estoque', 'id_local_deposito', 'num_produto', 'qtd_itens'], 'integer'],
+            [['endereco_item','nome_deposito'], 'safe'],
         ];
     }
 
@@ -40,7 +40,8 @@ class TbEstoqueSearch extends TbEstoque
      */
     public function search($params)
     {
-        $query = TbEstoque::find()->joinWith('produto');
+        $query = TbEstoque::find()
+        ->joinWith(['produto', 'localDeposito']);
 
         //$nome_produto = $params["TbEstoqueSearch"]["nome_produto"];
         $nome_produto = isset($params["TbEstoqueSearch"]["nome_produto"]) ? $params["TbEstoqueSearch"]["nome_produto"] : null;
@@ -48,10 +49,13 @@ class TbEstoqueSearch extends TbEstoque
         // Adicione os campos que deseja ordenar
         $query->select([
             'tb_estoque.*', // Seleciona todos os campos da tabela de estoque
+            'tb_local_deposito.nome_deposito',
             'tb_produto.nome_produto',
             'tb_produto.estado_produto',
             'tb_produto.preco_produto'
-        ]);
+        ])
+
+        ->orderBy(['tb_produto.nome_produto' => SORT_ASC]); // Ordena pelo nome_produto A-Z;
 
         // add conditions that should always apply here
 
@@ -71,11 +75,13 @@ class TbEstoqueSearch extends TbEstoque
         $query->andFilterWhere([
             'id_estoque' => $this->id_estoque,
             'tb_estoque.num_produto' => $this->num_produto,
+            'tb_estoque.id_local_deposito' => $this->id_local_deposito,
             'qtd_itens' => $this->qtd_itens,
         ]);
 
         $query->andFilterWhere(['like', 'endereco_item', $this->endereco_item]);
         $query->andFilterWhere(['like', 'tb_produto.nome_produto', $nome_produto]);
+        $query->andFilterWhere(['like', 'tb_local_deposito.nome_deposito', $this->nome_deposito]);
 
         return $dataProvider;
     }

@@ -234,8 +234,6 @@ class TbHistoricoConsumoController extends Controller
         $produtoModel = new TbProduto();
         $estoqueModel = new TbEstoque();
 
-
-
         if ($this->request->isPost) {
             // Carregue os modelos TbProduto e TbEstoque com base nos dados fornecidos
             $produtoModel->load($this->request->post());
@@ -249,11 +247,11 @@ class TbHistoricoConsumoController extends Controller
             $qtdItens =  $consultaSaldoDisponivel->qtd_itens;
             $qtdConsumida = $model->qtd_consumida;
 
-
             $nomeProduto = $produtoModel->nome_produto;
             $enderecoEstoque = $estoqueModel->endereco_item;
+            $id_local_deposito = $estoqueModel->id_local_deposito;
 
-            //var_dump($qtdItens);die;
+            $deposito = Yii::$app->db->createCommand("SELECT nome_deposito FROM tb_local_deposito WHERE id_local_deposito = $id_local_deposito ")->queryScalar();
 
             //var_dump($model->qtd_consumida);
 
@@ -268,15 +266,21 @@ class TbHistoricoConsumoController extends Controller
                     ->update('tb_estoque', ['qtd_itens' => $novaQuantidade], ['id_estoque' => $estoqueModel->id_estoque])
                     ->execute();
 
-
                     $consultaSaldo = TbEstoque::findOne($idEstoque);
 
-                    if ($consultaSaldo->qtd_itens <= 5){
+                    if ($consultaSaldo->qtd_itens <= 10){
                         Yii::$app->mailer->compose()
-							->setFrom('projeto.integrador.univesp@outlook.com')
+                            ->setFrom(['projeto.integrador.univesp.eig@gmail.com' => 'Sistema EIG'])
 							->setTo('2101648@aluno.univesp.br')
-							->setHtmlBody("<p><strong style='color:red;'><u>ALERTA DE ESTOQUE BAIXO:</u></strong></p><br>
-                                <p><strong>Código produto: </strong><em>$idEstoque</em> - <strong>Nome: </strong><em>$nomeProduto</em> localizado no <em>endereço $enderecoEstoque</em>, está com nível baixo, restando apenas <em style='color:red;'>$consultaSaldo->qtd_itens unidades</em>.</p>
+							->setHtmlBody("
+                                <p><strong style='color:red;'><u>ALERTA DE ESTOQUE BAIXO:</u></strong></p><br>
+                                <p>
+                                    <strong>Código produto: </strong><em>$idEstoque</em><BR>
+                                    <strong>Nome: </strong><em>$nomeProduto</em><BR>
+                                    <strong>Endereço: </strong><em> $enderecoEstoque</em><BR>
+                                    <strong>Depósito: </strong><em> $deposito</em><BR>
+                                    <strond>Está com nível baixo, restando apenas <em style='color:red;'>$consultaSaldo->qtd_itens unidades</em></strong>.
+                                </p>
                                 <br>
                                 <p><em>Esta é uma mensagem automática gerada pelo sistema EIG para controle de Estoque.</em></p>
                             ")
@@ -286,6 +290,23 @@ class TbHistoricoConsumoController extends Controller
 
 
                     //var_dump($consultaSaldo->qtd_itens);die;
+
+                    Yii::$app->mailer->compose()
+                    ->setFrom(['projeto.integrador.univesp.eig@gmail.com' => 'Sistema EIG'])
+                    ->setTo('2101648@aluno.univesp.br')
+                    ->setHtmlBody("
+                        <p><strong style='color:red;'><u>ALERTA DE CONSUMO:</u></strong></p><br>
+                        <p>
+                            <strong>Código produto: </strong><em>$idEstoque</em><BR>
+                            <strong>Nome: </strong><em>$nomeProduto</em><BR>
+                            <strong>Endereço: </strong><em> $enderecoEstoque</em><BR>
+                            <strong>Depósito: </strong><em> $deposito</em>.
+                        </p>
+                        <br>
+                        <p><em>Esta é uma mensagem automática gerada pelo sistema EIG para controle de Estoque.</em></p>
+                    ")
+                    ->setSubject("Alerta de consumo - $nomeProduto")
+                    ->send();
 
                     // Crie um flash message de Sucesso
                     Yii::$app->session->setFlash('success', 'Consumo gravado com sucesso.');

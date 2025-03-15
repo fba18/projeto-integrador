@@ -52,6 +52,7 @@ $estoqueModel = new TbEstoque();
                                         <?php
                                             $id = Yii::$app->request->get('id_estoque');
                                             if($id !== null) {
+
                                                 //Apenas Update(Atualização)
                                                 $produtoModel->num_produto = $xb->num_produto;
                                                 $produtoModel->nome_produto = $xb->nome_produto;
@@ -99,7 +100,41 @@ $estoqueModel = new TbEstoque();
                                             } else {
                                                 //Apenas Create(Novo item)
                                                 ?>
-                                                <div class="col-lg-2 col-sm-12 col-xs-12 col-md-6">
+                                                <div class="col-lg-3 col-sm-12 col-xs-12 col-md-6">
+                                                    <?php
+                                                        $localDepositos = Yii::$app->db->createCommand("SELECT id_local_deposito, nome_deposito FROM tb_local_deposito ORDER BY nome_deposito")->queryAll();
+                                                    ?>
+                                                    <?= $form->field($estoqueModel, 'id_local_deposito')->dropDownList(
+                                                        ArrayHelper::map($localDepositos, 'id_local_deposito', 'nome_deposito'),
+                                                        [
+                                                            'prompt' => 'Selecione um depósito',
+                                                            'onchange' => "
+                                                                // Impede que o 'change' dispare novamente no trigger abaixo
+                                                                isUpdating = true;
+
+                                                                // Limpa o campo produto
+                                                                $('#num_produto_select2').val(null).trigger('change');
+                                                                // Limpa o campo nome produto
+                                                                $('#tbproduto-nome_produto').val(null).trigger('change');
+
+                                                                isUpdating = false; // Libera de novo para o usuário
+
+                                                                $('input#estado_produto').val('');
+
+                                                                $('input#preco_produto').val('');
+                                                                $('input#num_produto_estoque').val('');
+                                                                $('input#tbestoque-qtd_itens').val('');
+                                                                $('input#tbestoque-endereco_item').val('');
+                                                                $('input#tbestoque-id_estoque').val('');
+
+                                                                $('input#tbhistoricoconsumo-id_num_produto').val('');
+                                                                $('input#tbhistoricoconsumo-id_estoque').val('');
+
+                                                            ",
+                                                        ]
+                                                    )->label('Local depósito:'); ?>
+                                                </div>
+                                                <div class="col-lg-3 col-sm-12 col-xs-12 col-md-6">
                                                     <?= $form->field($produtoModel, 'num_produto')->widget(Select2::classname(), [
                                                         'data' => TbProduto::getProdutos(),
                                                         'options' => ['placeholder' => 'Selecione um produto', 'id' => 'num_produto_select2'],
@@ -108,12 +143,37 @@ $estoqueModel = new TbEstoque();
                                                         ],
                                                         'pluginEvents' => [
                                                             "change" => "function() {
-                                                                if ($(this).val().length > 3) {
-                                                                    $.post('/tb-estoque/obter-dados-saldo-estoque?num_produto=' + $(this).val(), function(data) {
+                                                                if (isUpdating) return; // Evita loop
+                                                                // Captura o valor do dropdown que disparou o evento
+                                                                var num_produto = $(this).val();
+
+                                                                // Captura o valor do outro dropdown (id_local_deposito)
+                                                                var id_local_deposito = $('#tbestoque-id_local_deposito').val();
+
+                                                                if (!id_local_deposito) {
+                                                                  alert('Por favor, selecione o Local de Depósito!');
+
+                                                                    // Impede que o 'change' dispare novamente no trigger abaixo
+                                                                    isUpdating = true;
+
+                                                                    // Limpa o campo produto
+                                                                    $('#num_produto_select2').val(null).trigger('change');
+
+                                                                    isUpdating = false; // Libera de novo para o usuário
+
+                                                                    return;
+                                                                }
+
+                                                                if (num_produto.length > 3) {
+                                                                    $.post('/tb-estoque/obter-dados-saldo-estoque?num_produto=' + num_produto + '&id_local_deposito='+id_local_deposito , function(data) {
                                                                         var vl = JSON.parse(data);
                                                                         //$('input#nome_produto').val(vl[1]);
 
-                                                                        $('#tbproduto-nome_produto').val(vl[1]).trigger('change'); // Trigger 'change' event
+                                                                        //$('#tbproduto-nome_produto').val(vl[1]).trigger('change'); // Trigger 'change' event
+
+                                                                        isUpdating = true; // flag ON
+                                                                        $('#tbproduto-nome_produto').val(vl[1]).trigger('change');
+                                                                        isUpdating = false; // flag OFF
                                                                         $('input#estado_produto').val(vl[2]);
 
                                                                         $('input#preco_produto').val('R$ ' + Number(vl[3]).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
@@ -124,13 +184,6 @@ $estoqueModel = new TbEstoque();
 
                                                                         $('input#tbhistoricoconsumo-id_num_produto').val(vl[0]);
                                                                         $('input#tbhistoricoconsumo-id_estoque').val(vl[6]);
-
-
-
-
-
-
-
 
                                                                         //Para vincular o código do produto à ID Estoque
                                                                         var num_produto_estoque = $('#num_produto_estoque').val();
@@ -145,9 +198,6 @@ $estoqueModel = new TbEstoque();
                                                             }",
                                                         ],
                                                     ])->label('Cód. Produto');
-
-
-
                                                     ?>
                                                     <?php //echo $numProduto;
                                                     //var_dump(TbProduto::getProdutos()); die; ?>
@@ -162,11 +212,37 @@ $estoqueModel = new TbEstoque();
                                                         ],
                                                         'pluginEvents' => [
                                                             "change" => "function() {
-                                                                if ($(this).val().length > 3) {
-                                                                    $.post('/tb-estoque/obter-dados-saldo-estoque-nome-produto?nome_produto=' + $(this).val(), function(data) {
+                                                             if (isUpdating) return; // Evita loop
+
+                                                                // Captura o valor do dropdown que disparou o evento
+                                                                var nome_produto = $(this).val();
+
+                                                                // Captura o valor do outro dropdown (id_local_deposito)
+                                                                var id_local_deposito = $('#tbestoque-id_local_deposito').val();
+
+                                                                if (!id_local_deposito) {
+                                                                    alert('Por favor, selecione o Local de Depósito!');
+
+                                                                    // Impede que o 'change' dispare novamente no trigger abaixo
+                                                                        isUpdating = true;
+
+                                                                    // Limpa o campo produto
+                                                                    $('#tbproduto-nome_produto').val(null).trigger('change');
+
+                                                                    isUpdating = false; // Libera de novo para o usuário
+
+                                                                    return;
+                                                                }
+
+                                                                if (nome_produto.length > 3) {
+                                                                    $.post('/tb-estoque/obter-dados-saldo-estoque-nome-produto?nome_produto=' + nome_produto + '&id_local_deposito='+id_local_deposito, function(data) {
                                                                         var vl = JSON.parse(data);
 
-                                                                        $('#num_produto_select2').val(vl[0]).trigger('change'); // Trigger 'change' event
+                                                                        //$('#num_produto_select2').val(vl[0]).trigger('change'); // Trigger 'change' event
+
+                                                                        isUpdating = true;
+                                                                        $('#num_produto_select2').val(vl[0]).trigger('change');
+                                                                        isUpdating = false;
                                                                         $('input#estado_produto').val(vl[2]);
 
                                                                         $('input#preco_produto').val('R$ ' + Number(vl[3]).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
@@ -177,13 +253,6 @@ $estoqueModel = new TbEstoque();
 
                                                                         $('input#tbhistoricoconsumo-id_num_produto').val(vl[0]);
                                                                         $('input#tbhistoricoconsumo-id_estoque').val(vl[6]);
-
-
-
-
-
-
-
 
                                                                         //Para vincular o código do produto à ID Estoque
                                                                         var num_produto_estoque = $('#num_produto_estoque').val();
@@ -202,6 +271,8 @@ $estoqueModel = new TbEstoque();
                                                         ])->label('Nome Produto');
                                                     ?>
                                                 </div>
+                                                </div>
+                                                <div class="container-fluid w-auto row">
                                                 <div class="col-lg-2 col-sm-12 col-xs-12 col-md-6">
                                                     <?= $form->field($produtoModel, 'estado_produto')->textInput(['readonly'=> true, 'maxlength' => true, 'id' => 'estado_produto'])->label('Estado Produto') ?>
                                                 </div>
@@ -341,3 +412,9 @@ $estoqueModel = new TbEstoque();
     </div>
 
 </div>
+
+<?php
+    $this->registerJs("
+        var isUpdating = false;
+    ");
+    ?>

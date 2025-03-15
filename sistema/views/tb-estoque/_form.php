@@ -108,7 +108,7 @@ $this->title = Yii::t('app', 'Saldo Estoque');
                                                 ?>
                                                 <div class="col-lg-2 col-sm-12 col-xs-12 col-md-6">
                                                     <?= $form->field($produtoModel, 'num_produto')->widget(Select2::classname(), [
-                                                        'data' => TbProduto::getProdutos(),
+                                                        'data' => TbProduto::getProdutosSemEstoque(),
                                                         'options' => ['placeholder' => 'Selecione um produto', 'id' => 'num_produto_select2'],
                                                         'pluginOptions' => [
                                                             'allowClear' => true,

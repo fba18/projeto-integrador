@@ -46,12 +46,18 @@ use kartik\select2\Select2;
                                             'pluginOptions' => [
                                                 'allowClear' => true,
                                             ],
-
-
                                         ])->label('Código Produto');
+                                        ?>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-12 col-xs-12 col-md-6">
+                                        <?= $form->field($model, 'nome_produto')->widget(Select2::classname(), [
+                                            'data' => TbEstoque::getEstoquesNomeProduto(),
+                                            'options' => ['placeholder' => 'Selecione um endereço', 'id' => 'nome_produto_select2'],
+                                            'pluginOptions' => [
+                                                'allowClear' => true,
+                                            ],
 
-
-
+                                        ])->label('Nome Produto');
                                         ?>
                                     </div>
                                     <!--div class="col-lg-1 col-sm-12 col-xs-12 col-md-6">
@@ -66,12 +72,20 @@ use kartik\select2\Select2;
                                             'pluginOptions' => [
                                                 'allowClear' => true,
                                             ],
-
-
                                         ])->label('Endereço Produto');
 
+                                        ?>
+                                    </div>
 
+                                    <div class="col-lg-2 col-sm-12 col-xs-12 col-md-6">
+                                        <?= $form->field($model, 'id_local_deposito')->widget(Select2::classname(), [
+                                            'data' => TbEstoque::getEstoquesDepositos(),
+                                            'options' => ['placeholder' => 'Selecione um endereço', 'id' => 'local_deposito_select2'],
+                                            'pluginOptions' => [
+                                                'allowClear' => true,
+                                            ],
 
+                                        ])->label('Local Depósito');
                                         ?>
                                     </div>
                                     <?php //$form->field($model, 'id_estoque') ?>
