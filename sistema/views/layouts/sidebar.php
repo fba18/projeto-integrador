@@ -172,8 +172,8 @@ use yii\helpers\Html;
                                 'icon' => 'bi bi-globe',
                                 'items' =>
                                 [
-                                    ['label' => 'Trocar Senha', 'icon' => 'bi bi-key', 'url' => ['/user-management/user/change-my-password']],
-                                    ['label' => 'Funcionário', 'icon' => 'bi bi-people-fill', 'url' => ['/user-management/user/index']],
+                                    ['label' => 'Trocar Senha', 'icon' => 'bi bi-key', 'url' => ['user-management/user/change-my-password']],
+                                    ['label' => 'Funcionário', 'icon' => 'bi bi-people-fill', 'url' => ['user-management/user/index']],
                                 ],
                             ],
 
@@ -182,7 +182,7 @@ use yii\helpers\Html;
                                 'icon' => 'bi bi-people-fill',
                                 'items' =>
                                 [
-                                    ['label' => 'Clientes', 'icon' => 'bi bi-key', 'url' => ['/tb-cliente/index']],
+                                    ['label' => 'Clientes', 'icon' => 'bi bi-key', 'url' => ['tb-cliente/index']],
                                 ],
                             ],
 
@@ -191,8 +191,9 @@ use yii\helpers\Html;
                                 'icon' => 'bi bi-boxes',
                                 'items' =>
                                 [
-                                    ['label' => 'Produto', 'icon' => 'bi bi-cart-plus', 'url' => ['/tb-produto/index']],
-                                    ['label' => 'Saldo Estoque', 'icon' => 'bi bi-box2', 'url' => ['/tb-estoque/index']],
+                                    ['label' => 'Produto', 'icon' => 'bi bi-cart-plus', 'url' => ['tb-produto/index']],
+                                    ['label' => 'Saldo Estoque', 'icon' => 'bi bi-box2', 'url' => ['tb-estoque/index']],
+                                    ['label' => 'Depósitos', 'icon' => 'bi bi-box2', 'url' => ['tb-local-deposito/index']],
                                 ],
                             ],
 
@@ -201,15 +202,15 @@ use yii\helpers\Html;
                                 'icon' => 'bi bi-boxes',
                                 'items' =>
                                 [
-                                    ['label' => 'Inserir Consumo', 'icon' => 'bi bi-box2', 'url' => ['/tb-cliente/index-consumo']],
-                                    ['label' => 'Histórico Consumo', 'icon' => 'bi bi-box2', 'url' => ['/tb-historico-consumo/index']],
+                                    ['label' => 'Inserir Consumo', 'icon' => 'bi bi-box2', 'url' => ['tb-cliente/index-consumo']],
+                                    ['label' => 'Histórico Consumo', 'icon' => 'bi bi-box2', 'url' => ['tb-historico-consumo/index']],
                                 ],
                             ],
 
                             [
                                 'label' => 'Dashboards',
                                 'icon' => 'bi bi-file-bar-graph',
-                                'url' => ['/tb-historico-consumo/dashboard']
+                                'url' => ['tb-historico-consumo/dashboard']
                                 /*'items' =>
                                 [
                                     ['label' => 'Inserir Consumo', 'icon' => '"bi bi-file-earmark-bar-graph', 'url' => ['/tb-cliente/index-consumo']],
