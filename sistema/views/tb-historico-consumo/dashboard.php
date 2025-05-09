@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //var_dump($criticidade);
 ?>
 
-
+<style> .iframe-container { position: relative; width: 100%; padding-bottom: 56.25%; /* 16:9 aspect ratio (9 / 16 * 100) */ height: 0; overflow: hidden; } .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; } </style>
 <div class="col-md-12">
 
     <!--div class="col-lg-12">
@@ -61,7 +61,13 @@ $this->params['breadcrumbs'][] = $this->title;
         </p>
     </div-->
 
-    <div class="col-md-12 row">
+    <div class="container-fluid w-auto row">
+        <div class="col-lg-12 col-sm-12 col-xs-12 col-md-6">
+        <iframe title="PI_V_a" style="width: 100%; height: 100%; min-height: 550px;" src="https://app.powerbi.com/reportEmbed?reportId=8d3b47a0-57e6-46da-854e-96ae4ad330bc&autoAuth=true&ctid=dee74457-d751-4011-a5c4-44560cf8b415" frameborder="0" allowFullScreen="true"></iframe>
+        </div>
+    </div>
+
+    <div class="mt-3 col-md-12 row">
 
 
         <!-- 5 PRODUTOS MAIS VENDIDOS-->

@@ -191,9 +191,11 @@ use yii\helpers\Html;
                                 'icon' => 'bi bi-boxes',
                                 'items' =>
                                 [
+                                    ['label' => 'Depósitos', 'icon' => 'fas fa-boxes', 'url' => ['tb-local-deposito/index']],
+                                    ['label' => 'Históritoco Entrada', 'icon' => 'fas fa-history', 'url' => ['tb-historico-entrada-estoque/index']],
                                     ['label' => 'Produto', 'icon' => 'bi bi-cart-plus', 'url' => ['tb-produto/index']],
                                     ['label' => 'Saldo Estoque', 'icon' => 'bi bi-box2', 'url' => ['tb-estoque/index']],
-                                    ['label' => 'Depósitos', 'icon' => 'bi bi-box2', 'url' => ['tb-local-deposito/index']],
+
                                 ],
                             ],
 
