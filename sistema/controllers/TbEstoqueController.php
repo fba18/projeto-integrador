@@ -606,7 +606,7 @@ class TbEstoqueController extends Controller
         }
 
         // Redireciona de volta (ou exibe algo)
-        return $this->redirect(['index']);
+        return $this->redirect(['tb-historico-entrada-estoque/index']);
     }
 
 
